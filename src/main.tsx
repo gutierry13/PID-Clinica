@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import {Model, createServer} from 'miragejs'
-interface Cliente{
+import { Model, createServer } from 'miragejs'
+import Modal from 'react-modal'
+interface Cliente {
   cpf: string
   nome: string
   dtNasc: Date
@@ -13,19 +14,19 @@ interface Cliente{
   cep: string
   estadoCivil: string
 }
-interface Animal{
- animalID: String
- nome: string
- idade: number
- raca: string
- especie: string
- genero: string
- peso: number
- cor: string
- porte: string
- historicoSaude: string
+interface Animal {
+  animalID: String
+  nome: string
+  idade: number
+  raca: string
+  especie: string
+  genero: string
+  peso: number
+  cor: string
+  porte: string
+  historicoSaude: string
 }
-interface Funcionario{
+interface Funcionario {
   cpf: string
   nome: string
   dtNasc: Date
@@ -39,7 +40,7 @@ interface Funcionario{
   dtContratacao: Date
   sexo: string
 }
-interface Consulta{
+interface Consulta {
   animalID: string
   clienteCPF: string
   funcionarioCPF: string
@@ -55,9 +56,9 @@ createServer({
     cliente: Model.extend<Partial<Cliente>>({}),
     animal: Model.extend<Partial<Animal>>({}),
     funcionario: Model.extend<Partial<Funcionario>>({}),
-    consulta: Model.extend<Partial<Consulta>>({}),
+    consulta: Model.extend<Partial<Consulta>>({})
   },
-  seeds(server){
+  seeds(server) {
     server.db.loadData({
       clientes: [
         {
@@ -128,33 +129,43 @@ createServer({
       ]
     })
   },
-  routes(){
+  routes() {
     this.namespace = 'api'
-    {/* API Cliente  */}
+    {
+      /* API Cliente  */
+    }
     this.get('/clientes')
-    this.post('/clientes')
-    {/* API Animal  */}
+    this.post('/clientes', (schema, request) => {
+      const data = JSON.parse(request.requestBody)
+      return schema.create('cliente', data)
+    })
+
+    // this.post('/clientes')
+    {
+      /* API Animal  */
+    }
     this.get('/animals')
     this.post('/animals')
-    {/* API Funcionario  */}
+    {
+      /* API Funcionario  */
+    }
     this.get('/funcionarios')
     this.post('/funcionarios')
-    {/* API Consultas  */}
+    {
+      /* API Consultas  */
+    }
     this.get('/consultas')
     this.post('/consultas')
   }
 })
 
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 )
-    // this.get('/clientes', ( ) =>{
-    //   return this.schema.all('clientes')
-    // })
-    // this.post('/clientes', (schema, request) =>{
-    //   const data = JSON.parse(request.requestBody)
-    //   return schema.create('clientes', data)
-    // })
+const appRoot = document.getElementById('root')
+Modal.setAppElement(appRoot!)
+// this.get('/clientes', ( ) =>{
+//   return this.schema.all('clientes')
+// })
