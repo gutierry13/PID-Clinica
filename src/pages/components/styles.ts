@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 export const AddButtonStyles = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
   letter-spacing: 1.5;
   cursor: pointer;
@@ -17,6 +20,9 @@ export const AddButtonStyles = styled.button`
   }
   `
 export const EditButtonStyles = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
  font-weight: bold;
   letter-spacing: 1.5;
   cursor: pointer;
@@ -33,7 +39,10 @@ export const EditButtonStyles = styled.button`
     background-color: #ffff76;
   }`
 export const DeleteButtonStyles = styled.button`
- font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   font-weight: bold;
   letter-spacing: 1.5;
   cursor: pointer;
   font-family: 'Poppins';

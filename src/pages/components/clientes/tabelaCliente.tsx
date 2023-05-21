@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { ContainerForm } from "./style";
 import { api } from "../../../services/api";
 import {} from 'react-modal'
+import { ContainerTable } from "../../../globalStyles";
 interface ClientesTypes{
   cpf: string
   nome: string
@@ -20,7 +20,7 @@ export function TabelaClientes(){
   },[])
 
   return (
-    <ContainerForm>
+    <ContainerTable>
     <table>
         <thead>
           <tr>
@@ -54,6 +54,6 @@ export function TabelaClientes(){
             })}
         </tbody>
     </table>
-    </ContainerForm>
+    </ContainerTable>
   )
 }

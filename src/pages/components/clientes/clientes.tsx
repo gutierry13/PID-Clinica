@@ -1,7 +1,8 @@
 import {motion} from 'framer-motion'
 import { TabelaClientes } from './tabelaCliente'
 import { AddButton} from '../buttons'
-import { ClienteContainer } from './style'
+import { CustomerContainer } from '../../../globalStyles'
+
 export function Clientes(){
 
   return (
@@ -11,14 +12,14 @@ export function Clientes(){
     transition={{ duration: 0.2 }}
     exit={{ x:-50,opacity: 0}}
     >
-      <ClienteContainer>
+      <CustomerContainer>
       <div className="text">
         <h1>Clientes</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi eaque maiores assumenda. Iusto perspiciatis, placeat quia, velit enim molestias commodi, libero quo expedita est ipsa omnis obcaecati! Minima, est debitis.</p>
       </div>
       <AddButton customer='Clientes'/>
           <TabelaClientes/>
-      </ClienteContainer>
+      </CustomerContainer>
     </motion.div>
   )
 }
