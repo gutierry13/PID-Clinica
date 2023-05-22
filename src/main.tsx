@@ -139,8 +139,20 @@ createServer({
       const data = JSON.parse(request.requestBody)
       return schema.create('cliente', data)
     })
+    this.patch('/clientes/:cpf', (schema, request) => {
+      const cpf = request.params.cpf
+      const attrs = JSON.parse(request.requestBody)
+      return schema.db.clientes.update({ cpf }, attrs)
+    })
+    // this.patch('/clientes/:cpf/delete', (schema, request) => {
+    //   const cpf = request.params.cpf
+    //   const item = schema.db.cliente.find(cpf)
 
-    // this.post('/clientes')
+    //   item.update({ isDeleted: true })
+
+    //   return item
+    // })
+
     {
       /* API Animal  */
     }

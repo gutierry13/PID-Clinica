@@ -17,6 +17,7 @@ interface ClienteProviderProps {
 interface ClientesContextData {
   clientes: ClientesTypes[]
   createCliente: (cliente: ClientesTypes) => Promise<void>
+  updateCliente: (cliente: ClientesTypes) => Promise<void>
 }
 export const ClienteContext = createContext<ClientesContextData>(
   {} as ClientesContextData
@@ -31,8 +32,24 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
     const { cliente } = response.data
     setClientes([...clientes, cliente])
   }
+  async function updateCliente(clienteInput: ClientesTypes) {
+    await api.patch(`/clientes/${clienteInput.cpf}`, clienteInput)
+
+    clientes.forEach((cliente) => {
+      if (cliente.cpf === clienteInput.cpf) {
+        cliente.nome = clienteInput.nome
+        cliente.dtNasc = clienteInput.dtNasc
+        cliente.email = clienteInput.email
+        cliente.telefone = clienteInput.telefone
+        cliente.ocupacao = clienteInput.ocupacao
+        cliente.sexo = clienteInput.sexo
+        cliente.cep = clienteInput.cep
+        cliente.estadoCivil = clienteInput.estadoCivil
+      }
+    })
+  }
   return (
-    <ClienteContext.Provider value={{ clientes, createCliente }}>
+    <ClienteContext.Provider value={{ clientes, createCliente, updateCliente }}>
       {children}
     </ClienteContext.Provider>
   )

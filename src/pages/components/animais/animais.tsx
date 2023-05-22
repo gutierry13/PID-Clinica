@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { CustomerContainer } from '../../../globalStyles'
-import { ButtonOpenModal } from '../buttons'
 import { TabelaAnimais } from './tabelaAnimais'
 import { AnimalModal } from './animalModal'
 import { AnimalProvider } from './animalContext'

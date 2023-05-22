@@ -17,9 +17,10 @@ interface Cliente {
 interface ClienteModalProps {
   open: boolean
   close: () => void
+  forceOpen?: () => void
 }
-export function ClienteModal({ open, close }: ClienteModalProps) {
-  const { createCliente } = useContext(ClienteContext)
+export function ClienteModal({ open, close, forceOpen }: ClienteModalProps) {
+  const { createCliente, updateCliente } = useContext(ClienteContext)
   // console.log(data)
   const [cliente, setCliente] = useState<Cliente>({
     cpf: '',
@@ -32,7 +33,6 @@ export function ClienteModal({ open, close }: ClienteModalProps) {
     cep: '',
     estadoCivil: ''
   })
-  console.log(cliente)
   async function handleSubmitCadastrarCliente(event: FormEvent) {
     event.preventDefault()
     await createCliente(cliente)
@@ -47,8 +47,16 @@ export function ClienteModal({ open, close }: ClienteModalProps) {
       cep: '',
       estadoCivil: ''
     })
+    close()
   }
-
+  async function handleUpdateCliente(event: FormEvent) {
+    event.preventDefault()
+    await updateCliente(cliente)
+    close()
+  }
+  // function openModalForEditCustomer() {
+  //   forceOpen()
+  // }
   return (
     <Modal
       isOpen={open}
@@ -128,6 +136,7 @@ export function ClienteModal({ open, close }: ClienteModalProps) {
         >
           Cadastrar
         </button>
+        <button onClick={handleUpdateCliente}>Alterar</button>
       </form>
     </Modal>
   )

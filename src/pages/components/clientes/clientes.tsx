@@ -1,19 +1,20 @@
 import { motion } from 'framer-motion'
 import { TabelaClientes } from './tabelaCliente'
 import { CustomerContainer } from '../../../globalStyles'
-import { ButtonOpenModal } from '../buttons'
 import { ClienteModal } from './clienteModal'
-import { ClienteContext, ClienteProvider } from './clienteContext'
+import { ClienteProvider } from './clienteContext'
 import { useState } from 'react'
 
 export function Clientes() {
   const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
+  const [clienteSelecionado, setClienteSelecionado] = useState(null)
   function handleOpenNewClienteModal() {
     setNewClienteModalOpen(true)
   }
   function handleCloseNewClienteModal() {
     setNewClienteModalOpen(false)
   }
+
   return (
     <ClienteProvider>
       <motion.div
@@ -42,8 +43,12 @@ export function Clientes() {
           <ClienteModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}
+            forceOpen={handleOpenNewClienteModal}
           />
-          <TabelaClientes />
+          <TabelaClientes
+            open={newClienteModalOpen}
+            close={handleCloseNewClienteModal}
+          />
         </CustomerContainer>
       </motion.div>
     </ClienteProvider>

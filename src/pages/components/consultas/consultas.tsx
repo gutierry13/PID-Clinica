@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { CustomerContainer } from '../../../globalStyles'
-import { AddButton, ButtonOpenModal } from '../buttons'
 import { TabelaConsultas } from './tabelaConsultas'
 import { ConsultaModal } from './consultaModal'
 import { ConsultaProvider } from './consultaContext'

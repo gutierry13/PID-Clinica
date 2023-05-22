@@ -1,11 +1,34 @@
 import { ContainerTable } from '../../../globalStyles'
-import { useContext } from 'react'
+import { FormEvent, useContext, useState } from 'react'
 import { ClienteContext } from './clienteContext'
-import { ButtonOpenModal, DeleteOpenModal } from '../buttons'
 import { ClienteModal } from './clienteModal'
-
-export function TabelaClientes() {
+interface ClienteModalProps {
+  open: boolean
+  close: () => void
+  abrirModalEdicao?: () => void
+}
+export function TabelaClientes({
+  open,
+  close,
+  abrirModalEdicao
+}: ClienteModalProps) {
   const { clientes } = useContext(ClienteContext)
+
+  function handlePreencherValores(e: FormEvent) {
+    forceOpen()
+    e.preventDefault()
+    console.log(
+      clientes.forEach((cliente) => {
+        if (
+          e.target.parentElement.parentElement.children[0].innerText ===
+          cliente.cpf
+        ) {
+          console.log('Existe')
+        }
+      })
+    )
+  }
+
   return (
     <ContainerTable>
       <table>
@@ -24,7 +47,7 @@ export function TabelaClientes() {
         </thead>
         <tbody>
           {clientes.map((cliente) => {
-            console.log()
+            // console.log()
             return (
               <tr>
                 <td id="cpf">{cliente.cpf}</td>
@@ -40,10 +63,17 @@ export function TabelaClientes() {
                 <td>{cliente.sexo}</td>
                 <td>{cliente.cep}</td>
                 <td>{cliente.estadoCivil}</td>
+                <td>
+                  <button onClick={handlePreencherValores}>More Actions</button>
+                </td>
               </tr>
             )
           })}
         </tbody>
+        <ClienteModal
+          open={open}
+          close={close}
+        />
       </table>
     </ContainerTable>
   )

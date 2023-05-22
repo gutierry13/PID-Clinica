@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { CustomerContainer } from '../../../globalStyles'
-import { AddButton, ButtonOpenModal } from '../buttons'
 import { TabelaFuncionarios } from './tabelaFuncionarios'
 import { FuncionarioModal } from './funcionarioModal'
 import { FuncionarioProvider } from './funcionarioContext'
