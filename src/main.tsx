@@ -145,7 +145,10 @@ createServer({
       /* API Animal  */
     }
     this.get('/animals')
-    this.post('/animals')
+    this.post('/animals', (schema, request) => {
+      const data = JSON.parse(request.requestBody)
+      return schema.create('animal', data)
+    })
     {
       /* API Funcionario  */
     }

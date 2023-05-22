@@ -1,5 +1,7 @@
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
 import { FormEvent, useState } from 'react'
+import Modal from 'react-modal'
+
 interface Funcionario {
   cpf: string
   nome: string
@@ -14,7 +16,11 @@ interface Funcionario {
   dtContratacao: Date | string
   sexo: string
 }
-export function FuncionarioModal() {
+interface ClienteModalProps {
+  open: boolean
+  close: () => void
+}
+export function FuncionarioModal({ open, close }: ClienteModalProps) {
   function handleSubmitFuncionario(event: FormEvent) {
     event.preventDefault()
   }
@@ -34,7 +40,10 @@ export function FuncionarioModal() {
   })
   console.log(funcionario)
   return (
-    <div>
+    <Modal
+      isOpen={open}
+      onRequestClose={close}
+    >
       <div className="title">
         <h1>Cadastrar Funcionários</h1>
       </div>
@@ -162,6 +171,6 @@ export function FuncionarioModal() {
           Cadastrar
         </button>
       </form>
-    </div>
+    </Modal>
   )
 }

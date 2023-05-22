@@ -1,9 +1,11 @@
 import { ContainerTable } from '../../../globalStyles'
 import { useContext } from 'react'
 import { ClienteContext } from './clienteContext'
+import { ButtonOpenModal, DeleteOpenModal } from '../buttons'
+import { ClienteModal } from './clienteModal'
 
 export function TabelaClientes() {
-  const clientes = useContext(ClienteContext)
+  const { clientes } = useContext(ClienteContext)
   return (
     <ContainerTable>
       <table>
@@ -25,7 +27,7 @@ export function TabelaClientes() {
             console.log()
             return (
               <tr>
-                <td>{cliente.cpf}</td>
+                <td id="cpf">{cliente.cpf}</td>
                 <td>{cliente.nome}</td>
                 <td>
                   {Intl.DateTimeFormat('pt-BR').format(

@@ -4,8 +4,16 @@ import { CustomerContainer } from '../../../globalStyles'
 import { ButtonOpenModal } from '../buttons'
 import { ClienteModal } from './clienteModal'
 import { ClienteContext, ClienteProvider } from './clienteContext'
+import { useState } from 'react'
 
 export function Clientes() {
+  const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
+  function handleOpenNewClienteModal() {
+    setNewClienteModalOpen(true)
+  }
+  function handleCloseNewClienteModal() {
+    setNewClienteModalOpen(false)
+  }
   return (
     <ClienteProvider>
       <motion.div
@@ -30,9 +38,11 @@ export function Clientes() {
         >
           <AddButton customer="Clientes" />
         </div> */}
-          <ButtonOpenModal customer="cliente">
-            <ClienteModal />
-          </ButtonOpenModal>
+          <button onClick={handleOpenNewClienteModal}>Abrir modal</button>
+          <ClienteModal
+            open={newClienteModalOpen}
+            close={handleCloseNewClienteModal}
+          />
           <TabelaClientes />
         </CustomerContainer>
       </motion.div>

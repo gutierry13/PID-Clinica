@@ -1,27 +1,12 @@
-import { useEffect, useState } from "react"
-import { api } from "../../../services/api"
-import { ContainerTable } from "../../../globalStyles"
+import { useContext } from 'react'
+import { ContainerTable } from '../../../globalStyles'
+import { AnimalContext } from './animalContext'
 
-interface Animal{
-  animalID: String
-  nome: string
-  idade: number
-  raca: string
-  especie: string
-  genero: string
-  peso: number
-  cor: string
-  porte: string
-  historicoSaude: string
- }
-export function TabelaAnimais(){
-  const [animais, setAnimais] = useState<Animal[]>([])
-  useEffect(()=>{
-    api.get('animals').then(response => setAnimais(response.data.animals))
-  },[])
+export function TabelaAnimais() {
+  const { animais } = useContext(AnimalContext)
   return (
     <ContainerTable>
-       <table>
+      <table>
         <thead>
           <tr>
             <th>Animal ID</th>
@@ -37,24 +22,24 @@ export function TabelaAnimais(){
           </tr>
         </thead>
         <tbody>
-            {animais.map(animal=>{
-              return (
-                <tr>
-                  <td>{animal.animalID}</td>
-                  <td>{animal.nome}</td>
-                  <td>{animal.idade}</td>
-                  <td>{animal.raca}</td>
-                  <td>{animal.especie}</td>
-                  <td>{animal.genero}</td>
-                  <td>{animal.peso}</td>
-                  <td>{animal.cor}</td>
-                  <td>{animal.porte}</td>
-                  <td>{animal.historicoSaude}</td>
-                </tr>
-              )
-            })}
+          {animais.map((animal) => {
+            return (
+              <tr>
+                <td>{animal.animalID}</td>
+                <td>{animal.nome}</td>
+                <td>{animal.idade}</td>
+                <td>{animal.raca}</td>
+                <td>{animal.especie}</td>
+                <td>{animal.genero}</td>
+                <td>{animal.peso}</td>
+                <td>{animal.cor}</td>
+                <td>{animal.porte}</td>
+                <td>{animal.historicoSaude}</td>
+              </tr>
+            )
+          })}
         </tbody>
-    </table>
+      </table>
     </ContainerTable>
   )
 }

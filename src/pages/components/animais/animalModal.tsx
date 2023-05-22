@@ -1,5 +1,7 @@
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useContext } from 'react'
+import Modal from 'react-modal'
+import { AnimalContext } from './animalContext'
 interface Animal {
   animalID: String
   nome: string
@@ -12,8 +14,12 @@ interface Animal {
   porte: string
   historicoSaude: string
 }
-
-export function AnimalModal() {
+interface ClienteModalProps {
+  open: boolean
+  close: () => void
+}
+export function AnimalModal({ open, close }: ClienteModalProps) {
+  const { createAnimal } = useContext(AnimalContext)
   const [animal, setAnimal] = useState<Animal>({
     animalID: '',
     nome: '',
@@ -29,9 +35,13 @@ export function AnimalModal() {
   console.log(animal)
   function handleSubmitAnimal(event: FormEvent) {
     event.preventDefault()
+    createAnimal(animal)
   }
   return (
-    <div>
+    <Modal
+      isOpen={open}
+      onRequestClose={close}
+    >
       <div className="title">
         <h1>Cadastrar Animais</h1>
       </div>
@@ -116,6 +126,6 @@ export function AnimalModal() {
           Cadastrar
         </button>
       </form>
-    </div>
+    </Modal>
   )
 }

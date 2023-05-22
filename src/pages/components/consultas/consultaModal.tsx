@@ -1,5 +1,7 @@
 import { InputTemplate } from '../simpleInputTemplate'
 import { FormEvent, useState } from 'react'
+import Modal from 'react-modal'
+
 interface Consulta {
   animalID: string
   clienteCPF: string
@@ -11,7 +13,11 @@ interface Consulta {
   tratamento: string
   observacao: string
 }
-export function ConsultaModal() {
+interface ClienteModalProps {
+  open: boolean
+  close: () => void
+}
+export function ConsultaModal({ open, close }: ClienteModalProps) {
   function handleSubmitConsulta(event: FormEvent) {
     event.preventDefault()
   }
@@ -28,7 +34,10 @@ export function ConsultaModal() {
   })
   console.log(consulta)
   return (
-    <div>
+    <Modal
+      isOpen={open}
+      onRequestClose={close}
+    >
       <div className="tex">
         <h1></h1>
       </div>
@@ -119,6 +128,6 @@ export function ConsultaModal() {
           Cadastrar
         </button>
       </form>
-    </div>
+    </Modal>
   )
 }

@@ -1,22 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { ContainerTable } from '../../../globalStyles'
-import { api } from '../../../services/api'
-interface Consulta {
-  animalID: string
-  clienteCPF: string
-  funcionarioCPF: string
-  dtConsulta: Date
-  motivoConsulta: string
-  diagnostico: string
-  medicamento: string
-  tratamento: string
-  observacao: string
-}
+import { ConsultaContext } from './consultaContext'
+
 export function TabelaConsultas() {
-  const [consultas, setConsultas] = useState<Consulta[]>([])
-  useEffect(() => {
-    api.get('consultas').then(response => setConsultas(response.data.consulta))
-  },[])
+  const consultas = useContext(ConsultaContext)
   return (
     <ContainerTable>
       <table>
@@ -34,13 +21,17 @@ export function TabelaConsultas() {
           </tr>
         </thead>
         <tbody>
-          {consultas.map(consulta => {
-            return(
+          {consultas.map((consulta) => {
+            return (
               <tr>
                 <td>{consulta.animalID}</td>
                 <td>{consulta.clienteCPF}</td>
                 <td>{consulta.funcionarioCPF}</td>
-                <td>{Intl.DateTimeFormat('pt-BR').format(new Date(consulta.dtConsulta))}</td>
+                <td>
+                  {Intl.DateTimeFormat('pt-BR').format(
+                    new Date(consulta.dtConsulta)
+                  )}
+                </td>
                 <td>{consulta.motivoConsulta}</td>
                 <td>{consulta.diagnostico}</td>
                 <td>{consulta.medicamento}</td>

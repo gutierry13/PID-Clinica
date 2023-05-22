@@ -1,7 +1,8 @@
 import { FormEvent, useState, useContext } from 'react'
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
-import { api } from '../../../services/api'
 import { ClienteContext } from './clienteContext'
+import Modal from 'react-modal'
+
 interface Cliente {
   cpf: string
   nome: string
@@ -13,8 +14,12 @@ interface Cliente {
   cep: string
   estadoCivil: string
 }
-export function ClienteModal() {
-  const data = useContext(ClienteContext)
+interface ClienteModalProps {
+  open: boolean
+  close: () => void
+}
+export function ClienteModal({ open, close }: ClienteModalProps) {
+  const { createCliente } = useContext(ClienteContext)
   // console.log(data)
   const [cliente, setCliente] = useState<Cliente>({
     cpf: '',
@@ -28,15 +33,27 @@ export function ClienteModal() {
     estadoCivil: ''
   })
   console.log(cliente)
-  function handleSubmitCadastrarCliente(event: FormEvent) {
+  async function handleSubmitCadastrarCliente(event: FormEvent) {
     event.preventDefault()
-    const data = cliente
-    api.post('/clientes', data).then(() => {
-      alert('Cliente cadastrado com sucesso!')
+    await createCliente(cliente)
+    setCliente({
+      cpf: '',
+      nome: '',
+      dtNasc: new Date(),
+      email: '',
+      telefone: '',
+      ocupacao: '',
+      sexo: 'Masculino',
+      cep: '',
+      estadoCivil: ''
     })
   }
+
   return (
-    <div>
+    <Modal
+      isOpen={open}
+      onRequestClose={close}
+    >
       <div className="title">
         <h1>Cadastrar Cliente</h1>
       </div>
@@ -112,6 +129,6 @@ export function ClienteModal() {
           Cadastrar
         </button>
       </form>
-    </div>
+    </Modal>
   )
 }
