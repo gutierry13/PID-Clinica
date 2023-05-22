@@ -2,32 +2,35 @@ import { FormEvent, useState, useContext } from 'react'
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
 import { api } from '../../../services/api'
 import { ClienteContext } from './clienteContext'
-
+interface Cliente {
+  cpf: string
+  nome: string
+  dtNasc: Date | string
+  email: string
+  telefone: string
+  ocupacao: string
+  sexo: string
+  cep: string
+  estadoCivil: string
+}
 export function ClienteModal() {
   const data = useContext(ClienteContext)
-  console.log(data)
-  const [nome, setNome] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [email, setEmail] = useState('')
-  const [dtNasc, setDtNasc] = useState('')
-  const [tel, setTel] = useState('')
-  const [ocp, setOcp] = useState('')
-  const [sexo, setSexo] = useState('')
-  const [cep, setCep] = useState('')
-  const [estCivil, setEstCivil] = useState('')
+  // console.log(data)
+  const [cliente, setCliente] = useState<Cliente>({
+    cpf: '',
+    nome: '',
+    dtNasc: new Date(),
+    email: '',
+    telefone: '',
+    ocupacao: '',
+    sexo: 'Masculino',
+    cep: '',
+    estadoCivil: ''
+  })
+  console.log(cliente)
   function handleSubmitCadastrarCliente(event: FormEvent) {
     event.preventDefault()
-    const data = {
-      nome,
-      cpf,
-      email,
-      dtNasc,
-      tel,
-      ocp,
-      sexo,
-      cep,
-      estCivil
-    }
+    const data = cliente
     api.post('/clientes', data).then(() => {
       alert('Cliente cadastrado com sucesso!')
     })
@@ -42,63 +45,65 @@ export function ClienteModal() {
           id="nome"
           name="Nome"
           type="text"
-          value={nome}
-          change={(e) => setNome(e.target.value)}
+          value={cliente.nome}
+          change={(e) => setCliente({ ...cliente, nome: e.target.value })}
         />
         <InputTemplate
           id="cpf"
           name="CPF"
           type="text"
-          value={cpf}
-          change={(e) => setCpf(e.target.value)}
+          value={cliente.cpf}
+          change={(e) => setCliente({ ...cliente, cpf: e.target.value })}
         />
         <InputTemplate
           id="email"
           name="Email"
           type="email"
-          value={email}
-          change={(e) => setEmail(e.target.value)}
+          value={cliente.email}
+          change={(e) => setCliente({ ...cliente, email: e.target.value })}
         />
         <InputTemplate
           id="dtNasc"
           name="Data de Nascimento"
           type="date"
-          value={dtNasc}
-          change={(e) => setDtNasc(e.target.value)}
+          value={cliente.dtNasc.toString()}
+          change={(e) => setCliente({ ...cliente, dtNasc: e.target.value })}
         />
         <InputTemplate
           id="telefone"
           name="Telefone"
           type="tel"
-          value={tel}
-          change={(e) => setTel(e.target.value)}
+          value={cliente.telefone}
+          change={(e) => setCliente({ ...cliente, telefone: e.target.value })}
         />
         <InputTemplate
           id="ocupacao"
           name="Ocupação"
           type="text"
-          value={ocp}
-          change={(e) => setOcp(e.target.value)}
+          value={cliente.ocupacao}
+          change={(e) => setCliente({ ...cliente, ocupacao: e.target.value })}
         />
         <SelectSexoTemplate
           value1="Masculino"
           value2="Feminino"
-          value={sexo}
-          change={(e) => setSexo(e.target.value)}
+          value={cliente.sexo}
+          change={(e) => setCliente({ ...cliente, sexo: e.target.value })}
         />
         <InputTemplate
           id="cep"
           name="CEP"
           type="text"
-          value={cep}
-          change={(e) => setCep(e.target.value)}
+          value={cliente.cep}
+          change={(e) => setCliente({ ...cliente, cep: e.target.value })}
         />
         <InputTemplate
           id="estdCivil"
           name="Estado Civil"
           type="text"
-          value={estCivil}
-          change={(e) => setEstCivil(e.target.value)}
+          value={cliente.estadoCivil}
+          change={(e) =>
+            setCliente({ ...cliente, estadoCivil: e.target.value })
+          }
         />
         <button
           type="submit"

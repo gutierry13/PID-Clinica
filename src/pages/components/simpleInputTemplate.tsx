@@ -39,8 +39,8 @@ export function SelectSexoTemplate({
         id="sexo"
         value={value}
       >
-        <option value="Masculino">{value1}</option>
-        <option value="Feminino">{value2}</option>
+        <option value={value1}>{value1}</option>
+        <option value={value2}>{value2}</option>
       </select>
     </div>
   )
