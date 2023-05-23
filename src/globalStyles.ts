@@ -18,6 +18,31 @@ export const GlobalStyle = createGlobalStyle`
   a{
     text-decoration: none;
   }
+  .react-modal-overlay{
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .react-modal-content{
+    width: 100%;
+    max-width: 576px;
+    background-color: #FFFFFF;
+    padding: 3rem;
+    position: relative;
+    border-radius: 6px;
+    svg{
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+  }
 `
 export const CustomerContainer = styled.div`
   padding: 2rem;
@@ -75,5 +100,46 @@ export const ContainerTable = styled.div`
     tr{
     }
 
+  }
+`
+export const ContainerModalForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 500px;
+    gap: 1.2rem;
+
+  }
+  input,select{
+    display: block;
+    font-weight: 400;
+    line-height: 1.2;
+    height: 2.2rem;
+    border-radius: 6px;
+    border: 1px solid #000;
+    outline: none;
+    padding: .5rem 1rem;
+    width: 100%;
+
+  }
+  label{
+    font-weight: 400;
+    line-height: 1.5;
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+  .buttons{
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 1rem;
+    width: 6rem;
+    align-items: center;
+    justify-content: center;
   }
 `

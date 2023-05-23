@@ -2,30 +2,26 @@ import { ContainerTable } from '../../../globalStyles'
 import { FormEvent, useContext, useState } from 'react'
 import { ClienteContext } from './clienteContext'
 import { ClienteModal } from './clienteModal'
+import { EditButtonStyles } from '../styles'
 interface ClienteModalProps {
   open: boolean
   close: () => void
-  abrirModalEdicao?: () => void
+  forceOpen?: () => void
+  abrirEdicaoModal?: () => void
 }
 export function TabelaClientes({
   open,
   close,
-  abrirModalEdicao
+  abrirEdicaoModal,
+  forceOpen
 }: ClienteModalProps) {
   const { clientes } = useContext(ClienteContext)
+  let [clienteSelecionado, setClienteSelecionado] = useState('')
 
-  function handlePreencherValores(e: FormEvent) {
+  function handlePreencherValores(event: FormEvent) {
     forceOpen()
-    e.preventDefault()
-    console.log(
-      clientes.forEach((cliente) => {
-        if (
-          e.target.parentElement.parentElement.children[0].innerText ===
-          cliente.cpf
-        ) {
-          console.log('Existe')
-        }
-      })
+    setClienteSelecionado(
+      event.target.parentElement.parentElement.children[0].innerText
     )
   }
 
@@ -47,7 +43,6 @@ export function TabelaClientes({
         </thead>
         <tbody>
           {clientes.map((cliente) => {
-            // console.log()
             return (
               <tr>
                 <td id="cpf">{cliente.cpf}</td>
@@ -64,7 +59,12 @@ export function TabelaClientes({
                 <td>{cliente.cep}</td>
                 <td>{cliente.estadoCivil}</td>
                 <td>
-                  <button onClick={handlePreencherValores}>More Actions</button>
+                  <EditButtonStyles
+                    className="editar"
+                    onClick={handlePreencherValores}
+                  >
+                    Editar
+                  </EditButtonStyles>
                 </td>
               </tr>
             )
@@ -73,6 +73,7 @@ export function TabelaClientes({
         <ClienteModal
           open={open}
           close={close}
+          clienteFromClick={clienteSelecionado}
         />
       </table>
     </ContainerTable>

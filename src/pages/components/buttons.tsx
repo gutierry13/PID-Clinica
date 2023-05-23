@@ -2,7 +2,6 @@ import { AddButtonStyles, DeleteButtonStyles, EditButtonStyles } from './styles'
 import { MdAdd } from 'react-icons/md'
 import { useState } from 'react'
 import Modal from 'react-modal'
-import { BiEditAlt } from 'react-icons/bi'
 import { RiDeleteBinLine } from 'react-icons/ri'
 interface AddButtonProps {
   customer: string

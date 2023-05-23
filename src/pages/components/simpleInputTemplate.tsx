@@ -19,7 +19,7 @@ export function InputTemplate({ name, type, id, value, change }: InputProps) {
         type={type}
         id={id}
         value={value}
-        onChange={change}
+        onInput={change}
       />
     </div>
   )

@@ -3,16 +3,45 @@ import { TabelaClientes } from './tabelaCliente'
 import { CustomerContainer } from '../../../globalStyles'
 import { ClienteModal } from './clienteModal'
 import { ClienteProvider } from './clienteContext'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
+import { AddButtonStyles } from '../styles'
 
 export function Clientes() {
   const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
-  const [clienteSelecionado, setClienteSelecionado] = useState(null)
+  // const [clienteSelecionado, setClienteSelecionado] = useState(null)
   function handleOpenNewClienteModal() {
     setNewClienteModalOpen(true)
   }
   function handleCloseNewClienteModal() {
     setNewClienteModalOpen(false)
+    setCliente({
+      cpf: '',
+      nome: '',
+      dtNasc: new Date(),
+      email: '',
+      telefone: '',
+      ocupacao: '',
+      sexo: 'Masculino',
+      cep: '',
+      estadoCivil: ''
+    })
+  }
+  function receberValores(valores) {
+    console.log(valores)
+    return valores
+  }
+  function handlePreencherValores(e: FormEvent, clientes) {
+    handleOpenNewClienteModal()
+    receberValores(clientes)
+
+    clientes.filter((cliente) => {
+      if (
+        e.target.parentElement.parentElement.children[0].innerText ===
+        cliente.cpf
+      ) {
+        console.log(cliente)
+      }
+    })
   }
 
   return (
@@ -26,12 +55,7 @@ export function Clientes() {
         <CustomerContainer>
           <div className="text">
             <h1>Clientes</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-              eaque maiores assumenda. Iusto perspiciatis, placeat quia, velit
-              enim molestias commodi, libero quo expedita est ipsa omnis
-              obcaecati! Minima, est debitis.
-            </p>
+            <p>Tela de gerenciamento e cadastro de clientes</p>
           </div>
           {/* <div
           onClick={handleOpenNewClienteModal}
@@ -39,15 +63,20 @@ export function Clientes() {
         >
           <AddButton customer="Clientes" />
         </div> */}
-          <button onClick={handleOpenNewClienteModal}>Abrir modal</button>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>
+            Cadastrar Cliente
+          </AddButtonStyles>
           <ClienteModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}
             forceOpen={handleOpenNewClienteModal}
+            clienteSelecionado={receberValores}
           />
           <TabelaClientes
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}
+            forceOpen={handleOpenNewClienteModal}
+            abrirEdicaoModal={handlePreencherValores}
           />
         </CustomerContainer>
       </motion.div>
