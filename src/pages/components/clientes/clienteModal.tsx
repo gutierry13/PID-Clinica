@@ -19,9 +19,7 @@ interface Cliente {
 interface ClienteModalProps {
   open: boolean
   close: () => void
-  forceOpen?: () => void
-  clienteSelecionado?: () => string
-  clienteFromClick: string
+  clienteFromClick?: string
 }
 export function ClienteModal({
   open,
@@ -40,25 +38,36 @@ export function ClienteModal({
     cep: '',
     estadoCivil: ''
   })
+
   useEffect(() => {
-    if (open) {
-      if (event.target.classList.contains('editar')) {
-        clientes.filter((item) => {
-          if (item.cpf === clienteFromClick) {
-            setCliente({
-              cpf: item.cpf,
-              nome: item.nome,
-              dtNasc: item.dtNasc,
-              email: item.email,
-              telefone: item.telefone,
-              ocupacao: item.ocupacao,
-              sexo: item.sexo,
-              cep: item.cep,
-              estadoCivil: item.estadoCivil
-            })
-          }
-        })
-      }
+if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boolean) {
+      clientes.filter((item) => {
+        if (item.cpf === clienteFromClick) {
+          setCliente({
+            cpf: item.cpf,
+            nome: item.nome,
+            dtNasc: Intl.DateTimeFormat('en-CA').format(new Date(item.dtNasc)),
+            email: item.email,
+            telefone: item.telefone,
+            ocupacao: item.ocupacao,
+            sexo: item.sexo,
+            cep: item.cep,
+            estadoCivil: item.estadoCivil
+          })
+        }
+      })
+    } else {
+      setCliente({
+        cpf: '',
+        nome: '',
+        dtNasc: new Date(),
+        email: '',
+        telefone: '',
+        ocupacao: '',
+        sexo: 'Masculino',
+        cep: '',
+        estadoCivil: ''
+      })
     }
   }, [open])
 

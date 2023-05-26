@@ -18,6 +18,7 @@ interface ClientesContextData {
   clientes: ClientesTypes[]
   createCliente: (cliente: ClientesTypes) => Promise<void>
   updateCliente: (cliente: ClientesTypes) => Promise<void>
+  deleteCliente: (clienteCpf: String) => Promise<void>
 }
 export const ClienteContext = createContext<ClientesContextData>(
   {} as ClientesContextData
@@ -33,7 +34,7 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
     setClientes([...clientes, cliente])
   }
   async function updateCliente(clienteInput: ClientesTypes) {
-    await api.patch(`/clientes/${clienteInput.cpf}`, clienteInput)
+    await api.put(`/clientes/${clienteInput.cpf}`, clienteInput)
 
     clientes.forEach((cliente) => {
       if (cliente.cpf === clienteInput.cpf) {
@@ -48,8 +49,13 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
       }
     })
   }
+  async function deleteCliente(clienteCpf:String) {
+    await api.delete(`/clientes/${clienteCpf}`).then((response) => setClientes( clientes.filter((cliente) => cliente.cpf !== clienteCpf)))
+    // console.log(clienteCpf)
+
+  }
   return (
-    <ClienteContext.Provider value={{ clientes, createCliente, updateCliente }}>
+    <ClienteContext.Provider value={{ clientes, createCliente, updateCliente,deleteCliente }}>
       {children}
     </ClienteContext.Provider>
   )

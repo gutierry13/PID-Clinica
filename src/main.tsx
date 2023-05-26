@@ -139,11 +139,21 @@ createServer({
       const data = JSON.parse(request.requestBody)
       return schema.create('cliente', data)
     })
-    this.patch('/clientes/:cpf', (schema, request) => {
+    this.put('/clientes/:cpf', (schema, request) => {
       const cpf = request.params.cpf
       const attrs = JSON.parse(request.requestBody)
       return schema.db.clientes.update({ cpf }, attrs)
     })
+    // this.del('/clientes/:cpf')
+      this.del('/clientes/:cpf', (schema, request) => {
+      const cpf = request.params.cpf
+      const cliente = schema.clientes.findBy({cpf})
+      return cliente.destroy()
+    })
+    // this.get('/clientes/:cpf', (schema, request) => {
+    //   const cpf = request.params.cpf
+    //   return schema.db.clientes.find(cpf)
+    // })
     // this.patch('/clientes/:cpf/delete', (schema, request) => {
     //   const cpf = request.params.cpf
     //   const item = schema.db.cliente.find(cpf)

@@ -1,28 +1,34 @@
 import { ContainerTable } from '../../../globalStyles'
-import { FormEvent, useContext, useState } from 'react'
+import {  MouseEvent, useContext, useEffect, useState } from 'react'
 import { ClienteContext } from './clienteContext'
 import { ClienteModal } from './clienteModal'
-import { EditButtonStyles } from '../styles'
+import { AiOutlineEdit } from 'react-icons/ai'
+import { AiOutlineDelete } from 'react-icons/ai'
 interface ClienteModalProps {
   open: boolean
   close: () => void
   forceOpen?: () => void
-  abrirEdicaoModal?: () => void
 }
-export function TabelaClientes({
-  open,
-  close,
-  abrirEdicaoModal,
-  forceOpen
-}: ClienteModalProps) {
-  const { clientes } = useContext(ClienteContext)
-  let [clienteSelecionado, setClienteSelecionado] = useState('')
+export function TabelaClientes({ open, close, forceOpen }: ClienteModalProps) {
+  const { clientes,deleteCliente } = useContext(ClienteContext)
+  const [clienteSelecionado, setClienteSelecionado] = useState('')
 
-  function handlePreencherValores(event: FormEvent) {
-    forceOpen()
-    setClienteSelecionado(
-      event.target.parentElement.parentElement.children[0].innerText
-    )
+  function handlePreencherValores(event: MouseEvent<HTMLOrSVGImageElement>) {
+    if (forceOpen && event.currentTarget.parentElement?.parentElement) {
+      forceOpen()
+      // console.log(event.currentTarget.parentElement?.parentElement.children[0])
+      setClienteSelecionado(
+        ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
+        
+      )
+    }
+  }
+
+  // console.log(clienteSelecionado)
+  function handleDeleteCliente(event: MouseEvent<HTMLOrSVGImageElement>){
+    const cpfElementValue = ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
+    deleteCliente(cpfElementValue)
+    
   }
 
   return (
@@ -44,7 +50,7 @@ export function TabelaClientes({
         <tbody>
           {clientes.map((cliente) => {
             return (
-              <tr>
+              <tr key={cliente.cpf}>
                 <td id="cpf">{cliente.cpf}</td>
                 <td>{cliente.nome}</td>
                 <td>
@@ -59,12 +65,21 @@ export function TabelaClientes({
                 <td>{cliente.cep}</td>
                 <td>{cliente.estadoCivil}</td>
                 <td>
-                  <EditButtonStyles
+                  <AiOutlineEdit
+                    size={22}
                     className="editar"
+                    style={{ color: '#808019' }}
                     onClick={handlePreencherValores}
-                  >
-                    Editar
-                  </EditButtonStyles>
+                  ></AiOutlineEdit>
+                </td>
+                <td>
+                  <AiOutlineDelete
+                    className="excluir"
+                    size={22}
+                    style={{ color: '#902727' }}
+                    onClick={handleDeleteCliente}
+                    // onClick={handleDeletarCliente}
+                  ></AiOutlineDelete>
                 </td>
               </tr>
             )
