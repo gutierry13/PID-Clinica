@@ -4,22 +4,29 @@ interface InputProps {
   id: string
   value: string | number
   change: (e: React.ChangeEvent<HTMLInputElement>) => void
+  disabled?: boolean
+  validated?: boolean
+  required?: boolean
+
 }
 interface SelectProps {
   value1: string
   value2: string
   value: string
-  change: (e: React.ChangeEvent<HTMLInputElement>) => void
+  change: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
-export function InputTemplate({ name, type, id, value, change }: InputProps) {
+ 
+export function InputTemplate({ name, type, id, value, change,validated=true,...props }: InputProps) {
   return (
-    <div>
+<div >
       <label htmlFor={id}>{name}</label>
       <input
         type={type}
         id={id}
         value={value}
         onInput={change}
+        style={!validated ?{ border: '1px solid red'}: {border: '1px solid black'}}
+        {...props}
       />
     </div>
   )

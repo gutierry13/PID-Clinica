@@ -1,4 +1,4 @@
-import { FormEvent, useState, useContext, useEffect } from 'react'
+import { FormEvent, useState, useContext, useEffect, } from 'react'
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
 import { ClienteContext } from './clienteContext'
 import Modal from 'react-modal'
@@ -20,11 +20,12 @@ interface ClienteModalProps {
   open: boolean
   close: () => void
   clienteFromClick?: string
+  forceOpen?: () => void
 }
 export function ClienteModal({
   open,
   close,
-  clienteFromClick
+  clienteFromClick,
 }: ClienteModalProps) {
   const { createCliente, updateCliente, clientes } = useContext(ClienteContext)
   const [cliente, setCliente] = useState<Cliente>({
@@ -38,9 +39,33 @@ export function ClienteModal({
     cep: '',
     estadoCivil: ''
   })
-
+  const [validateFormAndAbleButton, setValidateFormAndAbleButton] = useState({
+    cpf:false,
+    numero:false,
+    cep:false
+  })
+  const [openModalWithUpdateButton, setOpenModalWithUpdateButton] =
+    useState(false)
+    const regex = {
+      cpf: /[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{2}/g,
+      numero: /(\(\d{2}\)|\d{2}\s?)?(\d{5,9})-?(\d{4})?/g,
+      cep: /(\d{5})(-??)(\d{3})/g,
+    }
+    useEffect(() => {
+      if(!open){
+        setValidateFormAndAbleButton({
+          cpf:false,
+          numero:false,
+          cep:false
+        })
+      }
+    },[open])
   useEffect(() => {
-if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boolean) {
+    if (
+      open &&
+      ((event?.target as HTMLElement).classList.contains('editar') as boolean)
+    ) {
+      setOpenModalWithUpdateButton(true)
       clientes.filter((item) => {
         if (item.cpf === clienteFromClick) {
           setCliente({
@@ -57,6 +82,8 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
         }
       })
     } else {
+      setOpenModalWithUpdateButton(false)
+      // close()
       setCliente({
         cpf: '',
         nome: '',
@@ -69,8 +96,7 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
         estadoCivil: ''
       })
     }
-  }, [open])
-
+  }, [open,clienteFromClick])
   async function handleSubmitCadastrarCliente(event: FormEvent) {
     event.preventDefault()
     await createCliente(cliente)
@@ -85,6 +111,11 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
       cep: '',
       estadoCivil: ''
     })
+    setValidateFormAndAbleButton({
+      cpf:false,
+      numero:false,
+      cep:false
+    })
     close()
   }
   async function handleUpdateCliente(event: FormEvent) {
@@ -92,7 +123,6 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
     await updateCliente(cliente)
     close()
   }
-
   return (
     <Modal
       isOpen={open}
@@ -116,13 +146,21 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
             type="text"
             value={cliente.nome}
             change={(e) => setCliente({ ...cliente, nome: e.target.value })}
+            
           />
           <InputTemplate
             id="cpf"
             name="CPF"
+            disabled={openModalWithUpdateButton}
             type="text"
             value={cliente.cpf}
-            change={(e) => setCliente({ ...cliente, cpf: e.target.value })}
+            required
+            change={(e) => {setCliente({ ...cliente, cpf: e.target.value })
+            setValidateFormAndAbleButton({
+              ...validateFormAndAbleButton,
+              cpf: regex.cpf.test(e.target.value)
+            })}}
+            validated={regex.cpf.test(cliente.cpf)}
           />
           <InputTemplate
             id="email"
@@ -130,6 +168,7 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
             type="email"
             value={cliente.email}
             change={(e) => setCliente({ ...cliente, email: e.target.value })}
+            
           />
           <InputTemplate
             id="dtNasc"
@@ -143,7 +182,13 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
             name="Telefone"
             type="tel"
             value={cliente.telefone}
-            change={(e) => setCliente({ ...cliente, telefone: e.target.value })}
+            required
+            change={(e) => {setCliente({ ...cliente, telefone: e.target.value })
+            setValidateFormAndAbleButton({
+              ...validateFormAndAbleButton,
+              numero: regex.numero.test(e.target.value)
+            })}}
+            validated={regex.numero.test(cliente.telefone)}
           />
           <InputTemplate
             id="ocupacao"
@@ -163,7 +208,14 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
             name="CEP"
             type="text"
             value={cliente.cep}
-            change={(e) => setCliente({ ...cliente, cep: e.target.value })}
+            required
+            change={(e) => {setCliente({ ...cliente, cep: e.target.value })
+            setValidateFormAndAbleButton({
+              ...validateFormAndAbleButton,
+              cep: regex.cep.test(e.target.value)
+            })
+            }}
+            validated={regex.cep.test(cliente.cep)}
           />
           <InputTemplate
             id="estdCivil"
@@ -176,15 +228,23 @@ if (open && ((event?.target as HTMLElement).classList.contains('editar')) as boo
           />
         </form>
         <div className="buttons">
-          <AddButtonStyles
-            type="submit"
-            onClick={handleSubmitCadastrarCliente}
-          >
-            Cadastrar
-          </AddButtonStyles>
-          <EditButtonStyles onClick={handleUpdateCliente}>
-            Alterar
-          </EditButtonStyles>
+          {openModalWithUpdateButton ? (
+            <EditButtonStyles onClick={handleUpdateCliente}>
+              Alterar
+            </EditButtonStyles>
+          ) : (
+            <AddButtonStyles
+              type="submit"
+              onClick={handleSubmitCadastrarCliente}
+              disabled={
+                !validateFormAndAbleButton.cpf.valueOf() || !validateFormAndAbleButton.numero.valueOf() || !validateFormAndAbleButton.cep.valueOf()
+ 
+              
+            }
+            >
+              Cadastrar
+            </AddButtonStyles>
+          )}
         </div>
       </ContainerModalForm>
     </Modal>

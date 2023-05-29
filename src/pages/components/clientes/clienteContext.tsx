@@ -51,7 +51,6 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
   }
   async function deleteCliente(clienteCpf:String) {
     await api.delete(`/clientes/${clienteCpf}`).then((response) => setClientes( clientes.filter((cliente) => cliente.cpf !== clienteCpf)))
-    // console.log(clienteCpf)
 
   }
   return (

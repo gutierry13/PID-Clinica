@@ -35,6 +35,7 @@ export function Clientes() {
           <ClienteModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}
+            forceOpen={handleOpenNewClienteModal}
           />
           <TabelaClientes
             open={newClienteModalOpen}

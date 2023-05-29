@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 export const AddButtonStyles = styled.button`
   display: flex;
   align-items: center;
@@ -18,12 +18,16 @@ export const AddButtonStyles = styled.button`
   &:hover {
     background-color: #8bc68b;
   }
-  `
+  &:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+`
 export const EditButtonStyles = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
- font-weight: bold;
+  font-weight: bold;
   letter-spacing: 1.5;
   cursor: pointer;
   font-family: 'Poppins';
@@ -37,12 +41,13 @@ export const EditButtonStyles = styled.button`
   transition: background 0.2s;
   &:hover {
     background-color: #ffff76;
-  }`
+  }
+`
 export const DeleteButtonStyles = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-   font-weight: bold;
+  font-weight: bold;
   letter-spacing: 1.5;
   cursor: pointer;
   font-family: 'Poppins';
@@ -56,4 +61,5 @@ export const DeleteButtonStyles = styled.button`
   transition: background 0.2s;
   &:hover {
     background-color: #ff8282;
-  }`
+  }
+`

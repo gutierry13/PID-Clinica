@@ -1,5 +1,5 @@
 import { ContainerTable } from '../../../globalStyles'
-import {  MouseEvent, useContext, useEffect, useState } from 'react'
+import {  MouseEvent, useContext, useState } from 'react'
 import { ClienteContext } from './clienteContext'
 import { ClienteModal } from './clienteModal'
 import { AiOutlineEdit } from 'react-icons/ai'
@@ -8,23 +8,23 @@ interface ClienteModalProps {
   open: boolean
   close: () => void
   forceOpen?: () => void
+
 }
-export function TabelaClientes({ open, close, forceOpen }: ClienteModalProps) {
+export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
   const { clientes,deleteCliente } = useContext(ClienteContext)
   const [clienteSelecionado, setClienteSelecionado] = useState('')
-
-  function handlePreencherValores(event: MouseEvent<HTMLOrSVGImageElement>) {
-    if (forceOpen && event.currentTarget.parentElement?.parentElement) {
-      forceOpen()
-      // console.log(event.currentTarget.parentElement?.parentElement.children[0])
-      setClienteSelecionado(
-        ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
-        
-      )
-    }
+   
+    function handlePreencherValores(event: MouseEvent<HTMLOrSVGImageElement>) {
+      if(forceOpen !== undefined){
+        const clienteSelecionadoCpf = ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
+        setClienteSelecionado(
+         clienteSelecionadoCpf
+         )
+         // setNewClienteModalOpen(true)
+         forceOpen() 
+      }
   }
 
-  // console.log(clienteSelecionado)
   function handleDeleteCliente(event: MouseEvent<HTMLOrSVGImageElement>){
     const cpfElementValue = ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
     deleteCliente(cpfElementValue)
@@ -68,7 +68,7 @@ export function TabelaClientes({ open, close, forceOpen }: ClienteModalProps) {
                   <AiOutlineEdit
                     size={22}
                     className="editar"
-                    style={{ color: '#808019' }}
+                    style={{ color: '#808019' , }}
                     onClick={handlePreencherValores}
                   ></AiOutlineEdit>
                 </td>
@@ -85,11 +85,11 @@ export function TabelaClientes({ open, close, forceOpen }: ClienteModalProps) {
             )
           })}
         </tbody>
-        <ClienteModal
-          open={open}
-          close={close}
-          clienteFromClick={clienteSelecionado}
-        />
+      <ClienteModal
+      clienteFromClick={clienteSelecionado}
+      open={open}
+      close={close}
+      />
       </table>
     </ContainerTable>
   )
