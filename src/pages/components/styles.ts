@@ -8,7 +8,7 @@ export const AddButtonStyles = styled.button`
   cursor: pointer;
   font-family: 'Poppins';
   font-size: 1rem;
-  background-color: green;
+  background-color: #13aa52;
   border: none;
   color: white;
   padding: 0.5rem 1rem;
@@ -16,7 +16,7 @@ export const AddButtonStyles = styled.button`
   margin-bottom: 1rem;
   transition: background 0.2s;
   &:hover {
-    background-color: #8bc68b;
+    background-color: #077a37;
   }
   &:disabled {
     background-color: gray;

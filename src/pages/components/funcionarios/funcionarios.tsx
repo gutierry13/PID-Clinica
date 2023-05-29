@@ -4,6 +4,7 @@ import { TabelaFuncionarios } from './tabelaFuncionarios'
 import { FuncionarioModal } from './funcionarioModal'
 import { FuncionarioProvider } from './funcionarioContext'
 import { useState } from 'react'
+import { AddButtonStyles } from '../styles'
 export function Funcionarios() {
   const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
   function handleOpenNewClienteModal() {
@@ -30,7 +31,7 @@ export function Funcionarios() {
               corrupti, dicta eligendi odit libero.
             </p>
           </div>
-          <button onClick={handleOpenNewClienteModal}>Abrir modal</button>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>Abrir modal</AddButtonStyles>
           <FuncionarioModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}

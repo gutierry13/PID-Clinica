@@ -4,6 +4,7 @@ import { TabelaConsultas } from './tabelaConsultas'
 import { ConsultaModal } from './consultaModal'
 import { ConsultaProvider } from './consultaContext'
 import { useState } from 'react'
+import { AddButtonStyles } from '../styles'
 
 export function Consultas() {
   const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
@@ -31,7 +32,7 @@ export function Consultas() {
               maiores sequi commodi!
             </p>
           </div>
-          <button onClick={handleOpenNewClienteModal}>Abrir modal</button>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>Abrir modal</AddButtonStyles>
           <ConsultaModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}

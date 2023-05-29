@@ -132,7 +132,7 @@ export function ClienteModal({
     >
       <ContainerModalForm>
         <div className="title">
-          <h1>Cadastrar Cliente</h1>
+      <h1>{openModalWithUpdateButton ? 'Editar Cliente' : 'Cadastrar Cliente'}</h1>
         </div>
         <IoClose
           size={30}

@@ -4,6 +4,7 @@ import { TabelaAnimais } from './tabelaAnimais'
 import { AnimalModal } from './animalModal'
 import { AnimalProvider } from './animalContext'
 import { useState } from 'react'
+import { AddButtonStyles } from '../styles'
 
 export function Animais() {
   const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
@@ -31,7 +32,7 @@ export function Animais() {
               cum ab inventore nemo voluptas?
             </p>
           </div>
-          <button onClick={handleOpenNewClienteModal}>Abrir modal</button>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>Abrir modal</AddButtonStyles>
           <AnimalModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}

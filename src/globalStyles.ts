@@ -55,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 export const CustomerContainer = styled.div`
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: start;
