@@ -8,7 +8,7 @@ import { IoClose } from 'react-icons/io5'
 interface Cliente {
   cpf: string
   nome: string
-  dtNasc: Date | string
+  dtNascimento: Date | string
   email: string
   telefone: string
   ocupacao: string
@@ -27,11 +27,11 @@ export function ClienteModal({
   close,
   clienteFromClick,
 }: ClienteModalProps) {
-  const { createCliente, updateCliente, clientes } = useContext(ClienteContext)
+  const { createCliente, /*updateCliente,*/ clientes } = useContext(ClienteContext)
   const [cliente, setCliente] = useState<Cliente>({
     cpf: '',
     nome: '',
-    dtNasc: new Date(),
+    dtNascimento: new Date(),
     email: '',
     telefone: '',
     ocupacao: '',
@@ -71,7 +71,7 @@ export function ClienteModal({
           setCliente({
             cpf: item.cpf,
             nome: item.nome,
-            dtNasc: Intl.DateTimeFormat('en-CA').format(new Date(item.dtNasc)),
+            dtNascimento: Intl.DateTimeFormat('en-CA').format(new Date(item.dtNascimento)),
             email: item.email,
             telefone: item.telefone,
             ocupacao: item.ocupacao,
@@ -87,7 +87,7 @@ export function ClienteModal({
       setCliente({
         cpf: '',
         nome: '',
-        dtNasc: new Date(),
+        dtNascimento: new Date(),
         email: '',
         telefone: '',
         ocupacao: '',
@@ -103,7 +103,7 @@ export function ClienteModal({
     setCliente({
       cpf: '',
       nome: '',
-      dtNasc: new Date(),
+      dtNascimento: new Date(),
       email: '',
       telefone: '',
       ocupacao: '',
@@ -120,7 +120,7 @@ export function ClienteModal({
   }
   async function handleUpdateCliente(event: FormEvent) {
     event.preventDefault()
-    await updateCliente(cliente)
+    // await updateCliente(cliente)
     close()
   }
   return (
@@ -171,11 +171,11 @@ export function ClienteModal({
             
           />
           <InputTemplate
-            id="dtNasc"
+            id="dtNascimento"
             name="Data de Nascimento"
             type="date"
-            value={cliente.dtNasc.toString()}
-            change={(e) => setCliente({ ...cliente, dtNasc: e.target.value })}
+            value={cliente.dtNascimento.toString()}
+            change={(e) => setCliente({ ...cliente, dtNascimento: e.target.value })}
           />
           <InputTemplate
             id="telefone"

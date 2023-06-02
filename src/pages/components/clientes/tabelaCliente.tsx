@@ -11,7 +11,7 @@ interface ClienteModalProps {
 
 }
 export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
-  const { clientes,deleteCliente } = useContext(ClienteContext)
+  const { clientes/*,deleteCliente*/ } = useContext(ClienteContext)
   const [clienteSelecionado, setClienteSelecionado] = useState('')
    
     function handlePreencherValores(event: MouseEvent<HTMLOrSVGImageElement>) {
@@ -27,7 +27,7 @@ export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
 
   function handleDeleteCliente(event: MouseEvent<HTMLOrSVGImageElement>){
     const cpfElementValue = ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
-    deleteCliente(cpfElementValue)
+    // deleteCliente(cpfElementValue)
     
   }
 
@@ -54,9 +54,7 @@ export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
                 <td id="cpf">{cliente.cpf}</td>
                 <td>{cliente.nome}</td>
                 <td>
-                  {Intl.DateTimeFormat('pt-BR').format(
-                    new Date(cliente.dtNasc)
-                  )}
+                  {String(cliente.dtNascimento)}
                 </td>
                 <td>{cliente.email}</td>
                 <td>{cliente.telefone}</td>
@@ -94,3 +92,6 @@ export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
     </ContainerTable>
   )
 }
+// {String(Intl.DateTimeFormat('pt-BR').format(
+//   new Date(cliente.dtNascimento)
+// ))}
