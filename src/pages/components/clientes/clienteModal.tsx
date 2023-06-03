@@ -19,7 +19,7 @@ interface Cliente {
 }
 
 export function ClienteModal() {
-  const { isModalOpen, CloseModal, clienteSelecionado } =
+  const { isModalOpen, CloseModal, clienteSelecionado, changeSelectedClient } =
     useContext(ModalContext)
 
   const { createCliente, updateCliente, clientes } = useContext(ClienteContext)
@@ -55,11 +55,10 @@ export function ClienteModal() {
       })
     }
   }, [isModalOpen])
+  //      isModalOpen &&
+  // ((event?.target as HTMLElement).classList.contains('editar') as boolean)
   useEffect(() => {
-    if (
-      isModalOpen &&
-      ((event?.target as HTMLElement).classList.contains('editar') as boolean)
-    ) {
+    if (isModalOpen && clienteSelecionado) {
       setOpenModalWithUpdateButton(true)
       clientes.filter((item) => {
         if (item.cpf === clienteSelecionado) {
@@ -79,6 +78,7 @@ export function ClienteModal() {
         }
       })
     } else {
+      changeSelectedClient('')
       setOpenModalWithUpdateButton(false)
       // CloseModal()
       setCliente({
@@ -93,8 +93,7 @@ export function ClienteModal() {
         estadoCivil: '',
       })
     }
-  }, [isModalOpen, clienteSelecionado, clientes])
-  console.log(openModalWithUpdateButton)
+  }, [isModalOpen, clienteSelecionado, clientes, changeSelectedClient])
   async function handleSubmitCadastrarCliente(event: FormEvent) {
     event.preventDefault()
     await createCliente(cliente)
