@@ -1,34 +1,31 @@
 import { ContainerTable } from '../../../globalStyles'
-import {  MouseEvent, useContext, useState } from 'react'
+import { MouseEvent, useContext } from 'react'
 import { ClienteContext } from './clienteContext'
-import { ClienteModal } from './clienteModal'
-import { AiOutlineEdit } from 'react-icons/ai'
-import { AiOutlineDelete } from 'react-icons/ai'
-interface ClienteModalProps {
-  open: boolean
-  close: () => void
-  forceOpen?: () => void
+// import { ClienteModal } from './clienteModal'
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
 
-}
-export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
-  const { clientes,deleteCliente } = useContext(ClienteContext)
-  const [clienteSelecionado, setClienteSelecionado] = useState('')
-   
-    function handlePreencherValores(event: MouseEvent<HTMLOrSVGImageElement>) {
-      if(forceOpen !== undefined){
-        const clienteSelecionadoCpf = ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
-        setClienteSelecionado(
-         clienteSelecionadoCpf
-         )
-         // setNewClienteModalOpen(true)
-         forceOpen() 
-      }
+import { ModalContext } from './modalContext'
+
+export function TabelaClientes() {
+  const { OpenModal, changeSelectedClient } = useContext(ModalContext)
+
+  const { clientes, deleteCliente } = useContext(ClienteContext)
+
+  function handlePreencherValores(event: MouseEvent) {
+    const clienteSelecionadoCpf = (
+      (event.currentTarget as HTMLElement).parentElement?.parentElement
+        ?.children[0] as HTMLElement
+    ).innerText
+    changeSelectedClient(clienteSelecionadoCpf)
+    OpenModal()
   }
 
-  function handleDeleteCliente(event: MouseEvent<HTMLOrSVGImageElement>){
-    const cpfElementValue = ((event.currentTarget as HTMLElement).parentElement?.parentElement?.children[0] as HTMLElement).innerText  
-     deleteCliente(cpfElementValue)
-    
+  function handleDeleteCliente(event: MouseEvent) {
+    const cpfElementValue = (
+      (event.currentTarget as HTMLElement).parentElement?.parentElement
+        ?.children[0] as HTMLElement
+    ).innerText
+    deleteCliente(cpfElementValue)
   }
 
   return (
@@ -54,7 +51,11 @@ export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
                 <td id="cpf">{cliente.cpf}</td>
                 <td>{cliente.nome}</td>
                 <td>
-                  {String(Intl.DateTimeFormat('pt-BR').format(new Date(cliente.dtNascimento)))}
+                  {String(
+                    Intl.DateTimeFormat('pt-BR').format(
+                      new Date(cliente.dtNascimento),
+                    ),
+                  )}
                 </td>
                 <td>{cliente.email}</td>
                 <td>{cliente.telefone}</td>
@@ -66,7 +67,7 @@ export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
                   <AiOutlineEdit
                     size={22}
                     className="editar"
-                    style={{ color: '#808019' , }}
+                    style={{ color: '#808019' }}
                     onClick={handlePreencherValores}
                   ></AiOutlineEdit>
                 </td>
@@ -76,22 +77,13 @@ export function TabelaClientes({ open, close, forceOpen, }: ClienteModalProps) {
                     size={22}
                     style={{ color: '#902727' }}
                     onClick={handleDeleteCliente}
-                    // onClick={handleDeletarCliente}
                   ></AiOutlineDelete>
                 </td>
               </tr>
             )
           })}
         </tbody>
-      <ClienteModal
-      clienteFromClick={clienteSelecionado}
-      open={open}
-      close={close}
-      />
       </table>
     </ContainerTable>
   )
 }
-// {String(Intl.DateTimeFormat('pt-BR').format(
-//   new Date(cliente.dtNascimento)
-// ))}

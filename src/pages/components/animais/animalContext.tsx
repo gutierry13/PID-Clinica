@@ -21,7 +21,7 @@ interface AnimalContextData {
   createAnimal: (animal: Animal) => void
 }
 export const AnimalContext = createContext<AnimalContextData>(
-  {} as AnimalContextData
+  {} as AnimalContextData,
 )
 export function AnimalProvider({ children }: AnimalProviderProps) {
   const [animais, setAnimais] = useState<Animal[]>([])
@@ -37,7 +37,7 @@ export function AnimalProvider({ children }: AnimalProviderProps) {
     <AnimalContext.Provider
       value={{
         animais,
-        createAnimal
+        createAnimal,
       }}
     >
       {children}

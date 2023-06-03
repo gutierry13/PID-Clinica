@@ -30,14 +30,11 @@ export function ConsultaModal({ open, close }: ClienteModalProps) {
     diagnostico: '',
     medicamento: '',
     tratamento: '',
-    observacao: ''
+    observacao: '',
   })
   console.log(consulta)
   return (
-    <Modal
-      isOpen={open}
-      onRequestClose={close}
-    >
+    <Modal isOpen={open} onRequestClose={close}>
       <div className="tex">
         <h1></h1>
       </div>
@@ -121,10 +118,7 @@ export function ConsultaModal({ open, close }: ClienteModalProps) {
             setConsulta({ ...consulta, observacao: e.target.value })
           }
         />
-        <button
-          type="submit"
-          onClick={handleSubmitConsulta}
-        >
+        <button type="submit" onClick={handleSubmitConsulta}>
           Cadastrar
         </button>
       </form>

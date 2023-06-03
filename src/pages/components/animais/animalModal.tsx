@@ -30,7 +30,7 @@ export function AnimalModal({ open, close }: ClienteModalProps) {
     peso: 0,
     cor: '',
     porte: '',
-    historicoSaude: ''
+    historicoSaude: '',
   })
   console.log(animal)
   function handleSubmitAnimal(event: FormEvent) {
@@ -38,10 +38,7 @@ export function AnimalModal({ open, close }: ClienteModalProps) {
     createAnimal(animal)
   }
   return (
-    <Modal
-      isOpen={open}
-      onRequestClose={close}
-    >
+    <Modal isOpen={open} onRequestClose={close}>
       <div className="title">
         <h1>Cadastrar Animais</h1>
       </div>
@@ -119,10 +116,7 @@ export function AnimalModal({ open, close }: ClienteModalProps) {
             setAnimal({ ...animal, historicoSaude: e.target.value })
           }
         />
-        <button
-          type="submit"
-          onClick={handleSubmitAnimal}
-        >
+        <button type="submit" onClick={handleSubmitAnimal}>
           Cadastrar
         </button>
       </form>

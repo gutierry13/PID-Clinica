@@ -29,7 +29,7 @@ export function TabelaConsultas() {
                 <td>{consulta.funcionarioCPF}</td>
                 <td>
                   {Intl.DateTimeFormat('pt-BR').format(
-                    new Date(consulta.dtConsulta)
+                    new Date(consulta.dtConsulta),
                   )}
                 </td>
                 <td>{consulta.motivoConsulta}</td>

@@ -3,17 +3,14 @@ import { TabelaClientes } from './tabelaCliente'
 import { CustomerContainer } from '../../../globalStyles'
 import { ClienteModal } from './clienteModal'
 import { ClienteProvider } from './clienteContext'
-import { useState } from 'react'
+import { useContext } from 'react'
 import { AddButtonStyles } from '../styles'
+import { ModalContext } from './modalContext'
 
 export function Clientes() {
-  const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
-  // const [clienteSelecionado, setClienteSelecionado] = useState(null)
+  const { OpenModal } = useContext(ModalContext)
   function handleOpenNewClienteModal() {
-    setNewClienteModalOpen(true)
-  }
-  function handleCloseNewClienteModal() {
-    setNewClienteModalOpen(false)
+    OpenModal()
   }
 
   return (
@@ -32,16 +29,8 @@ export function Clientes() {
           <AddButtonStyles onClick={handleOpenNewClienteModal}>
             Cadastrar Cliente
           </AddButtonStyles>
-          <ClienteModal
-            open={newClienteModalOpen}
-            close={handleCloseNewClienteModal}
-            forceOpen={handleOpenNewClienteModal}
-          />
-          <TabelaClientes
-            open={newClienteModalOpen}
-            close={handleCloseNewClienteModal}
-            forceOpen={handleOpenNewClienteModal}
-          />
+          <ClienteModal />
+          <TabelaClientes />
         </CustomerContainer>
       </motion.div>
     </ClienteProvider>

@@ -1,10 +1,11 @@
-import { FormEvent, useState, useContext, useEffect, } from 'react'
+import { FormEvent, useState, useContext, useEffect } from 'react'
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
 import { ClienteContext } from './clienteContext'
 import Modal from 'react-modal'
 import { ContainerModalForm } from '../../../globalStyles'
 import { AddButtonStyles, EditButtonStyles } from '../styles'
 import { IoClose } from 'react-icons/io5'
+import { ModalContext } from './modalContext'
 interface Cliente {
   cpf: string
   nome: string
@@ -16,17 +17,11 @@ interface Cliente {
   cep: string
   estadoCivil: string
 }
-interface ClienteModalProps {
-  open: boolean
-  close: () => void
-  clienteFromClick?: string
-  forceOpen?: () => void
-}
-export function ClienteModal({
-  open,
-  close,
-  clienteFromClick,
-}: ClienteModalProps) {
+
+export function ClienteModal() {
+  const { isModalOpen, CloseModal, clienteSelecionado } =
+    useContext(ModalContext)
+
   const { createCliente, updateCliente, clientes } = useContext(ClienteContext)
   const [cliente, setCliente] = useState<Cliente>({
     cpf: '',
@@ -37,53 +32,55 @@ export function ClienteModal({
     ocupacao: '',
     sexo: 'Masculino',
     cep: '',
-    estadoCivil: ''
+    estadoCivil: '',
   })
   const [validateFormAndAbleButton, setValidateFormAndAbleButton] = useState({
-    cpf:false,
-    numero:false,
-    cep:false
+    cpf: false,
+    numero: false,
+    cep: false,
   })
   const [openModalWithUpdateButton, setOpenModalWithUpdateButton] =
     useState(false)
-    const regex = {
-      cpf: /[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{2}/g,
-      numero: /(\(\d{2}\)|\d{2}\s?)?(\d{5,9})-?(\d{4})?/g,
-      cep: /(\d{5})(-??)(\d{3})/g,
+  const regex = {
+    cpf: /[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{3}[.-]?[0-9]{2}/g,
+    numero: /(\(\d{2}\)|\d{2}\s?)?(\d{5,9})-?(\d{4})?/g,
+    cep: /(\d{5})(-??)(\d{3})/g,
+  }
+  useEffect(() => {
+    if (!isModalOpen) {
+      setValidateFormAndAbleButton({
+        cpf: false,
+        numero: false,
+        cep: false,
+      })
     }
-    useEffect(() => {
-      if(!open){
-        setValidateFormAndAbleButton({
-          cpf:false,
-          numero:false,
-          cep:false
-        })
-      }
-    },[open])
+  }, [isModalOpen])
   useEffect(() => {
     if (
-      open &&
+      isModalOpen &&
       ((event?.target as HTMLElement).classList.contains('editar') as boolean)
     ) {
       setOpenModalWithUpdateButton(true)
       clientes.filter((item) => {
-        if (item.cpf === clienteFromClick) {
+        if (item.cpf === clienteSelecionado) {
           setCliente({
             cpf: item.cpf,
             nome: item.nome,
-            dtNascimento: Intl.DateTimeFormat('en-CA').format(new Date(item.dtNascimento)),
+            dtNascimento: Intl.DateTimeFormat('en-CA').format(
+              new Date(item.dtNascimento),
+            ),
             email: item.email,
             telefone: item.telefone,
             ocupacao: item.ocupacao,
             sexo: item.sexo,
             cep: item.cep,
-            estadoCivil: item.estadoCivil
+            estadoCivil: item.estadoCivil,
           })
         }
       })
     } else {
       setOpenModalWithUpdateButton(false)
-      // close()
+      // CloseModal()
       setCliente({
         cpf: '',
         nome: '',
@@ -93,10 +90,11 @@ export function ClienteModal({
         ocupacao: '',
         sexo: 'Masculino',
         cep: '',
-        estadoCivil: ''
+        estadoCivil: '',
       })
     }
-  }, [open,clienteFromClick])
+  }, [isModalOpen, clienteSelecionado, clientes])
+  console.log(openModalWithUpdateButton)
   async function handleSubmitCadastrarCliente(event: FormEvent) {
     event.preventDefault()
     await createCliente(cliente)
@@ -109,36 +107,34 @@ export function ClienteModal({
       ocupacao: '',
       sexo: 'Masculino',
       cep: '',
-      estadoCivil: ''
+      estadoCivil: '',
     })
     setValidateFormAndAbleButton({
-      cpf:false,
-      numero:false,
-      cep:false
+      cpf: false,
+      numero: false,
+      cep: false,
     })
-    close()
+    CloseModal()
   }
   async function handleUpdateCliente(event: FormEvent) {
     event.preventDefault()
     await updateCliente(cliente)
-    close()
+    CloseModal()
   }
   return (
     <Modal
-      isOpen={open}
-      onRequestClose={close}
+      isOpen={isModalOpen}
+      onRequestClose={CloseModal}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >
       <ContainerModalForm>
         <div className="title">
-      <h1>{openModalWithUpdateButton ? 'Editar Cliente' : 'Cadastrar Cliente'}</h1>
+          <h1>
+            {openModalWithUpdateButton ? 'Editar Cliente' : 'Cadastrar Cliente'}
+          </h1>
         </div>
-        <IoClose
-          size={30}
-          onClick={close}
-          style={{ cursor: 'pointer' }}
-        />
+        <IoClose size={30} onClick={CloseModal} style={{ cursor: 'pointer' }} />
         <form action="">
           <InputTemplate
             id="nome"
@@ -146,7 +142,6 @@ export function ClienteModal({
             type="text"
             value={cliente.nome}
             change={(e) => setCliente({ ...cliente, nome: e.target.value })}
-            
           />
           <InputTemplate
             id="cpf"
@@ -155,11 +150,13 @@ export function ClienteModal({
             type="text"
             value={cliente.cpf}
             required
-            change={(e) => {setCliente({ ...cliente, cpf: e.target.value })
-            setValidateFormAndAbleButton({
-              ...validateFormAndAbleButton,
-              cpf: regex.cpf.test(e.target.value)
-            })}}
+            change={(e) => {
+              setCliente({ ...cliente, cpf: e.target.value })
+              setValidateFormAndAbleButton({
+                ...validateFormAndAbleButton,
+                cpf: regex.cpf.test(e.target.value),
+              })
+            }}
             validated={regex.cpf.test(cliente.cpf)}
           />
           <InputTemplate
@@ -168,14 +165,15 @@ export function ClienteModal({
             type="email"
             value={cliente.email}
             change={(e) => setCliente({ ...cliente, email: e.target.value })}
-            
           />
           <InputTemplate
             id="dtNascimento"
             name="Data de Nascimento"
             type="date"
             value={cliente.dtNascimento.toString()}
-            change={(e) => setCliente({ ...cliente, dtNascimento: e.target.value })}
+            change={(e) =>
+              setCliente({ ...cliente, dtNascimento: e.target.value })
+            }
           />
           <InputTemplate
             id="telefone"
@@ -183,11 +181,13 @@ export function ClienteModal({
             type="tel"
             value={cliente.telefone}
             required
-            change={(e) => {setCliente({ ...cliente, telefone: e.target.value })
-            setValidateFormAndAbleButton({
-              ...validateFormAndAbleButton,
-              numero: regex.numero.test(e.target.value)
-            })}}
+            change={(e) => {
+              setCliente({ ...cliente, telefone: e.target.value })
+              setValidateFormAndAbleButton({
+                ...validateFormAndAbleButton,
+                numero: regex.numero.test(e.target.value),
+              })
+            }}
             validated={regex.numero.test(cliente.telefone)}
           />
           <InputTemplate
@@ -209,11 +209,12 @@ export function ClienteModal({
             type="text"
             value={cliente.cep}
             required
-            change={(e) => {setCliente({ ...cliente, cep: e.target.value })
-            setValidateFormAndAbleButton({
-              ...validateFormAndAbleButton,
-              cep: regex.cep.test(e.target.value)
-            })
+            change={(e) => {
+              setCliente({ ...cliente, cep: e.target.value })
+              setValidateFormAndAbleButton({
+                ...validateFormAndAbleButton,
+                cep: regex.cep.test(e.target.value),
+              })
             }}
             validated={regex.cep.test(cliente.cep)}
           />
@@ -237,10 +238,10 @@ export function ClienteModal({
               type="submit"
               onClick={handleSubmitCadastrarCliente}
               disabled={
-                !validateFormAndAbleButton.cpf.valueOf() || !validateFormAndAbleButton.numero.valueOf() || !validateFormAndAbleButton.cep.valueOf()
- 
-              
-            }
+                !validateFormAndAbleButton.cpf.valueOf() ||
+                !validateFormAndAbleButton.numero.valueOf() ||
+                !validateFormAndAbleButton.cep.valueOf()
+              }
             >
               Cadastrar
             </AddButtonStyles>

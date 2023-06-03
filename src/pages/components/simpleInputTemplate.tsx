@@ -7,7 +7,6 @@ interface InputProps {
   disabled?: boolean
   validated?: boolean
   required?: boolean
-
 }
 interface SelectProps {
   value1: string
@@ -15,17 +14,29 @@ interface SelectProps {
   value: string
   change: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
- 
-export function InputTemplate({ name, type, id, value, change,validated=true,...props }: InputProps) {
+
+export function InputTemplate({
+  name,
+  type,
+  id,
+  value,
+  change,
+  validated = true,
+  ...props
+}: InputProps) {
   return (
-<div >
+    <div>
       <label htmlFor={id}>{name}</label>
       <input
         type={type}
         id={id}
         value={value}
         onInput={change}
-        style={!validated ?{ border: '1px solid red'}: {border: '1px solid black'}}
+        style={
+          !validated
+            ? { border: '1px solid red' }
+            : { border: '1px solid black' }
+        }
         {...props}
       />
     </div>
@@ -35,17 +46,12 @@ export function SelectSexoTemplate({
   value1,
   value2,
   value,
-  change
+  change,
 }: SelectProps) {
   return (
     <div>
       <label htmlFor="sexo">Sexo</label>
-      <select
-        onChange={change}
-        name="sexo"
-        id="sexo"
-        value={value}
-      >
+      <select onChange={change} name="sexo" id="sexo" value={value}>
         <option value={value1}>{value1}</option>
         <option value={value2}>{value2}</option>
       </select>

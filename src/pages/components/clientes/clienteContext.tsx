@@ -21,7 +21,7 @@ interface ClientesContextData {
   deleteCliente: (clienteCpf: String) => Promise<void>
 }
 export const ClienteContext = createContext<ClientesContextData>(
-  {} as ClientesContextData
+  {} as ClientesContextData,
 )
 export function ClienteProvider({ children }: ClienteProviderProps) {
   const [clientes, setClientes] = useState<ClientesTypes[]>([])
@@ -67,16 +67,21 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
       }
     })
   }
-  async function deleteCliente(clienteCpf:String) {
-    await api.delete(`/clientes`,{
-      data:{
-        cpf:clienteCpf
-      }
-}).then((response) =>  setClientes( clientes.filter((cliente) => cliente.cpf !== clienteCpf)) )
-    
+  async function deleteCliente(clienteCpf: String) {
+    await api
+      .delete(`/clientes`, {
+        data: {
+          cpf: clienteCpf,
+        },
+      })
+      .then((response) =>
+        setClientes(clientes.filter((cliente) => cliente.cpf !== clienteCpf)),
+      )
   }
   return (
-<ClienteContext.Provider value={{ clientes, createCliente, updateCliente,deleteCliente }}>
+    <ClienteContext.Provider
+      value={{ clientes, createCliente, updateCliente, deleteCliente }}
+    >
       {children}
     </ClienteContext.Provider>
   )

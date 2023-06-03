@@ -36,14 +36,11 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
     estadoCivil: '',
     cep: 0,
     dtContratacao: new Date(),
-    sexo: 'Masculino'
+    sexo: 'Masculino',
   })
   console.log(funcionario)
   return (
-    <Modal
-      isOpen={open}
-      onRequestClose={close}
-    >
+    <Modal isOpen={open} onRequestClose={close}>
       <div className="title">
         <h1>Cadastrar Funcionários</h1>
       </div>
@@ -77,7 +74,7 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
           change={(e) =>
             setFuncionario({
               ...funcionario,
-              dtNasc: e.target.value
+              dtNasc: e.target.value,
             })
           }
         />
@@ -152,7 +149,7 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
           change={(e) =>
             setFuncionario({
               ...funcionario,
-              dtContratacao: e.target.value
+              dtContratacao: e.target.value,
             })
           }
         />
@@ -164,10 +161,7 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
             setFuncionario({ ...funcionario, sexo: e.target.value })
           }
         />
-        <button
-          type="submit"
-          onClick={handleSubmitFuncionario}
-        >
+        <button type="submit" onClick={handleSubmitFuncionario}>
           Cadastrar
         </button>
       </form>

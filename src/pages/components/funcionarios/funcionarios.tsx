@@ -31,7 +31,9 @@ export function Funcionarios() {
               corrupti, dicta eligendi odit libero.
             </p>
           </div>
-          <AddButtonStyles onClick={handleOpenNewClienteModal}>Abrir modal</AddButtonStyles>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>
+            Abrir modal
+          </AddButtonStyles>
           <FuncionarioModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}

@@ -32,7 +32,9 @@ export function Consultas() {
               maiores sequi commodi!
             </p>
           </div>
-          <AddButtonStyles onClick={handleOpenNewClienteModal}>Abrir modal</AddButtonStyles>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>
+            Abrir modal
+          </AddButtonStyles>
           <ConsultaModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}

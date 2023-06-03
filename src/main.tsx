@@ -187,7 +187,7 @@ interface Consulta {
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 )
 const appRoot = document.getElementById('root')
 Modal.setAppElement(appRoot!)

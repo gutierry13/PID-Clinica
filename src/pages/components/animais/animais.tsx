@@ -32,7 +32,9 @@ export function Animais() {
               cum ab inventore nemo voluptas?
             </p>
           </div>
-          <AddButtonStyles onClick={handleOpenNewClienteModal}>Abrir modal</AddButtonStyles>
+          <AddButtonStyles onClick={handleOpenNewClienteModal}>
+            Abrir modal
+          </AddButtonStyles>
           <AnimalModal
             open={newClienteModalOpen}
             close={handleCloseNewClienteModal}

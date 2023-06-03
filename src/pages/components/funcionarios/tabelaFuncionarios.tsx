@@ -32,7 +32,7 @@ export function TabelaFuncionarios() {
                 <td>{funcionario.nome}</td>
                 <td>
                   {Intl.DateTimeFormat('pt-BR').format(
-                    new Date(funcionario.dtNasc)
+                    new Date(funcionario.dtNasc),
                   )}
                 </td>
                 <td>{funcionario.funcao}</td>
@@ -44,7 +44,7 @@ export function TabelaFuncionarios() {
                 <td>{funcionario.cep}</td>
                 <td>
                   {Intl.DateTimeFormat('pt-BR').format(
-                    new Date(funcionario.dtContratacao)
+                    new Date(funcionario.dtContratacao),
                   )}
                 </td>
                 <td>{funcionario.sexo}</td>
