@@ -27,7 +27,7 @@ export function ClienteModal({
   close,
   clienteFromClick,
 }: ClienteModalProps) {
-  const { createCliente, /*updateCliente,*/ clientes } = useContext(ClienteContext)
+  const { createCliente, updateCliente, clientes } = useContext(ClienteContext)
   const [cliente, setCliente] = useState<Cliente>({
     cpf: '',
     nome: '',
@@ -120,7 +120,7 @@ export function ClienteModal({
   }
   async function handleUpdateCliente(event: FormEvent) {
     event.preventDefault()
-    // await updateCliente(cliente)
+    await updateCliente(cliente)
     close()
   }
   return (
