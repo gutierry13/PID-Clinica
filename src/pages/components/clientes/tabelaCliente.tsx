@@ -1,5 +1,5 @@
 import { ContainerTable } from '../../../globalStyles'
-import { MouseEvent, useContext } from 'react'
+import { ChangeEvent, MouseEvent, useContext, useState } from 'react'
 import { ClienteContext } from './clienteContext'
 // import { ClienteModal } from './clienteModal'
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
@@ -8,8 +8,8 @@ import { ModalContext } from './modalContext'
 
 export function TabelaClientes() {
   const { OpenModal, changeSelectedClient } = useContext(ModalContext)
-
-  const { clientes, deleteCliente } = useContext(ClienteContext)
+  const [clientCpfInputSearch, setClientCpfInputSearch] = useState('')
+  const { clientes, deleteCliente, searchClient } = useContext(ClienteContext)
 
   function handlePreencherValores(event: MouseEvent) {
     const clienteSelecionadoCpf = (
@@ -27,9 +27,25 @@ export function TabelaClientes() {
     ).innerText
     deleteCliente(cpfElementValue)
   }
-
+  function handleSearchClientForCPF(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.value.length >= 0) {
+      setClientCpfInputSearch(event.target.value)
+      searchClient(event.target.value)
+    } else {
+      setClientCpfInputSearch('')
+    }
+  }
   return (
     <ContainerTable>
+      <div>
+        <label htmlFor="search">Search</label>
+        <input
+          type="text"
+          id="search"
+          onChange={handleSearchClientForCPF}
+          value={clientCpfInputSearch}
+        />
+      </div>
       <table>
         <thead>
           <tr>

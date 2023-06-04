@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useEffect, useState } from 'react'
 import { api } from '../../../services/api'
 interface ClientesTypes {
   cpf: string
@@ -12,13 +12,14 @@ interface ClientesTypes {
   cep: string
 }
 interface ClienteProviderProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 interface ClientesContextData {
   clientes: ClientesTypes[]
   createCliente: (cliente: ClientesTypes) => Promise<void>
   updateCliente: (cliente: ClientesTypes) => Promise<void>
   deleteCliente: (clienteCpf: String) => Promise<void>
+  searchClient: (clienteCpf: String) => Promise<void>
 }
 export const ClienteContext = createContext<ClientesContextData>(
   {} as ClientesContextData,
@@ -29,6 +30,14 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
     api.get('/clientes').then((response) => setClientes(response.data))
     // fetch('http://localhost:3001/clientes').then((response) =>response.json()).then((data) => setClientes(data))
   }, [])
+  async function searchClient(clientCpf: String) {
+    if (clientCpf) {
+      const response = await api.get(`/clientes/${clientCpf}`)
+      setClientes(response.data)
+    } else {
+      api.get('/clientes').then((response) => setClientes(response.data))
+    }
+  }
   async function createCliente(clienteInput: ClientesTypes) {
     //  fetch('http://localhost:3001/clientes', {
     //   method: 'POST',
@@ -80,7 +89,13 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
   }
   return (
     <ClienteContext.Provider
-      value={{ clientes, createCliente, updateCliente, deleteCliente }}
+      value={{
+        clientes,
+        createCliente,
+        updateCliente,
+        deleteCliente,
+        searchClient,
+      }}
     >
       {children}
     </ClienteContext.Provider>
