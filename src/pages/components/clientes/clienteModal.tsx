@@ -141,11 +141,13 @@ export function ClienteModal() {
             type="text"
             value={cliente.nome}
             change={(e) => setCliente({ ...cliente, nome: e.target.value })}
+            title={cliente.nome}
           />
           <InputTemplate
             id="cpf"
             name="CPF"
             disabled={openModalWithUpdateButton}
+            title={cliente.cpf}
             type="text"
             value={cliente.cpf}
             required
@@ -164,6 +166,7 @@ export function ClienteModal() {
             type="email"
             value={cliente.email}
             change={(e) => setCliente({ ...cliente, email: e.target.value })}
+            title={cliente.email}
           />
           <InputTemplate
             id="dtNascimento"
@@ -179,6 +182,7 @@ export function ClienteModal() {
             name="Telefone"
             type="tel"
             value={cliente.telefone}
+            title={cliente.telefone}
             required
             change={(e) => {
               setCliente({ ...cliente, telefone: e.target.value })
@@ -195,6 +199,7 @@ export function ClienteModal() {
             type="text"
             value={cliente.ocupacao}
             change={(e) => setCliente({ ...cliente, ocupacao: e.target.value })}
+            title={cliente.ocupacao}
           />
           <SelectSexoTemplate
             value1="Masculino"
@@ -208,6 +213,7 @@ export function ClienteModal() {
             type="text"
             value={cliente.cep}
             required
+            title={cliente.cep}
             change={(e) => {
               setCliente({ ...cliente, cep: e.target.value })
               setValidateFormAndAbleButton({

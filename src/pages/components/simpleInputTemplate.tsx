@@ -1,18 +1,21 @@
+import { ChangeEvent } from 'react'
+
 interface InputProps {
   name: string
   type: string
   id: string
   value: string | number
-  change: (e: React.ChangeEvent<HTMLInputElement>) => void
+  change: (e: ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
   validated?: boolean
   required?: boolean
+  title?: string
 }
 interface SelectProps {
   value1: string
   value2: string
   value: string
-  change: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  change: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 
 export function InputTemplate({

@@ -85,6 +85,22 @@ export const CustomerContainer = styled.div`
   }
 `
 export const ContainerTable = styled.div`
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.2rem;
+    input {
+      border-radius: 8px;
+      border: 1px solid black;
+      outline: none;
+      height: 1.5rem;
+      width: 14rem;
+      line-height: 1.2;
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+  }
   width: 100%;
   max-width: 1150px;
   table {
@@ -115,11 +131,14 @@ export const ContainerModalForm = styled.div`
   justify-content: space-around;
   form {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    width: 500px;
+    width: 550px;
     gap: 1.2rem;
+    div {
+      width: 16rem;
+    }
   }
   input,
   select {
