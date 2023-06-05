@@ -27,21 +27,18 @@ export function Clientes() {
             <h1>Clientes</h1>
             <p>Tela de gerenciamento e cadastro de clientes</p>
           </div>
-          <AlertMessageBox
-            alertType="success"
-            content="Sucesso"
-            visible={true}
-          />
-          <AlertMessageBox alertType="error" content="Erro" visible={true} />
+
+          {/* <AlertMessageBox alertType="error" content="Erro" visible={true} />
           <AlertMessageBox
             alertType="warning"
             content="Problema"
             visible={true}
-          />
+          /> */}
           <AddButtonStyles onClick={handleOpenNewClienteModal}>
             Cadastrar Cliente
           </AddButtonStyles>
           <ClienteModal />
+          <AlertMessageBox />
           <TabelaClientes />
         </CustomerContainer>
       </motion.div>

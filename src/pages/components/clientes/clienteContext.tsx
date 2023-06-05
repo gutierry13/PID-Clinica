@@ -20,11 +20,22 @@ interface ClientesContextData {
   updateCliente: (cliente: ClientesTypes) => Promise<void>
   deleteCliente: (clienteCpf: String) => Promise<void>
   searchClient: (clienteCpf: String) => Promise<void>
+  setAlertMessageBoxInfo: (alertMessageBoxInfo: any) => void
+  alertMessageBoxInfo: {
+    visible: boolean
+    alertType: string
+    content: string
+  }
 }
 export const ClienteContext = createContext<ClientesContextData>(
   {} as ClientesContextData,
 )
 export function ClienteProvider({ children }: ClienteProviderProps) {
+  const [alertMessageBoxInfo, setAlertMessageBoxInfo] = useState({
+    visible: false,
+    alertType: '',
+    content: '',
+  })
   const [clientes, setClientes] = useState<ClientesTypes[]>([])
   useEffect(() => {
     api.get('/clientes').then((response) => setClientes(response.data))
@@ -58,6 +69,11 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
     // }).then((response) => response.json()).then(cliente => setClientes([...clientes, cliente]))
     const response = await api.post('/clientes', clienteInput)
     const { data } = response.config
+    setAlertMessageBoxInfo({
+      visible: Boolean(true),
+      alertType: 'success',
+      content: 'Cliente cadastrado com sucesso',
+    })
     setClientes([...clientes, JSON.parse(data)])
   }
   async function updateCliente(clienteInput: ClientesTypes) {
@@ -75,6 +91,11 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
         cliente.estadoCivil = clienteInput.estadoCivil
       }
     })
+    setAlertMessageBoxInfo({
+      visible: Boolean(true),
+      alertType: 'success',
+      content: 'Cliente alterado com sucesso',
+    })
   }
   async function deleteCliente(clienteCpf: String) {
     await api
@@ -83,7 +104,7 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
           cpf: clienteCpf,
         },
       })
-      .then((response) =>
+      .then(() =>
         setClientes(clientes.filter((cliente) => cliente.cpf !== clienteCpf)),
       )
   }
@@ -95,6 +116,8 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
         updateCliente,
         deleteCliente,
         searchClient,
+        alertMessageBoxInfo,
+        setAlertMessageBoxInfo,
       }}
     >
       {children}

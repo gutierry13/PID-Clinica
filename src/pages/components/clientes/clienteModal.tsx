@@ -6,6 +6,7 @@ import { ContainerModalForm } from '../../../globalStyles'
 import { AddButtonStyles, EditButtonStyles } from '../styles'
 import { IoClose } from 'react-icons/io5'
 import { ModalContext } from './modalContext'
+
 interface Cliente {
   cpf: string
   nome: string
@@ -113,6 +114,7 @@ export function ClienteModal() {
       numero: false,
       cep: false,
     })
+
     CloseModal()
   }
   async function handleUpdateCliente(event: FormEvent) {
