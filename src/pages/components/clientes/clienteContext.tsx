@@ -92,7 +92,7 @@ export function ClienteProvider({ children }: ClienteProviderProps) {
       }
     })
     setAlertMessageBoxInfo({
-      visible: Boolean(true),
+      visible: true,
       alertType: 'success',
       content: 'Cliente alterado com sucesso',
     })

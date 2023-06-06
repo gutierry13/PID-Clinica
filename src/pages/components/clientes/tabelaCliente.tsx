@@ -21,12 +21,15 @@ export function TabelaClientes() {
   }
 
   function handleDeleteCliente(event: MouseEvent) {
-    const cpfElementValue = (
-      (event.currentTarget as HTMLElement).parentElement?.parentElement
-        ?.children[0] as HTMLElement
-    ).innerText
-    deleteCliente(cpfElementValue)
+    if (window.confirm('Deletar cliente') === true) {
+      const cpfElementValue = (
+        (event.currentTarget as HTMLElement).parentElement?.parentElement
+          ?.children[0] as HTMLElement
+      ).innerText
+      deleteCliente(cpfElementValue)
+    }
   }
+
   function handleSearchClientForCPF(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.value.length >= 0) {
       setClientCpfInputSearch(event.target.value)

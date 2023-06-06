@@ -2,7 +2,9 @@ import { styled } from 'styled-components'
 
 interface Props {
   active: boolean
+  animation: string
 }
+
 export const SimpleAlert = styled.div<Props>`
   /* display: ${(props) => (props.active ? 'flex' : 'none')}; */
   display: flex;
@@ -23,10 +25,9 @@ export const SimpleAlert = styled.div<Props>`
   font-size: 1.2rem;
   font-weight: 500;
   /* animation:  */
-  animation: ${(props) =>
-    props.active
-      ? 'alert-box 0.6s linear forwards;'
-      : 'hideAlert 0.6s linear forwards '};
+  animation: ${(props) => props.animation};
+  //alert-box 0.6s linear forwards;
+  //'hideAlert 0.6s  linear forwards'
 
   @keyframes alert-box {
     0% {
@@ -42,7 +43,7 @@ export const SimpleAlert = styled.div<Props>`
       right: 2.5%;
     }
     100% {
-      right: -50%;
+      right: -50rem;
     }
   }
 

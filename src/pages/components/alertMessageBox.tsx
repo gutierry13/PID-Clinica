@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ErrorAlert, SuccessAlert, WarningAlert } from './alertBox'
 import {
   AiOutlineCheck,
@@ -8,13 +8,38 @@ import {
 import { ClienteContext } from './clientes/clienteContext'
 
 export function AlertMessageBox() {
-  const { alertMessageBoxInfo } = useContext(ClienteContext)
+  const { alertMessageBoxInfo, setAlertMessageBoxInfo } =
+    useContext(ClienteContext)
   const { alertType, content, visible } = alertMessageBoxInfo
-  // const [active, setActive] = useState(visible)
+  const [animation, setAnimation] = useState('')
+  function showAlert() {
+    setAnimation('alert-box 0.6s linear forwards;')
+  }
+  function hideAlert() {
+    setTimeout(() => {
+      setAnimation('hideAlert 0.8s linear forwards')
+      clearAlert()
+    }, 2600)
+  }
+  function clearAlert() {
+    setTimeout(() => {
+      setAlertMessageBoxInfo({
+        visible: false,
+        alertType: '',
+        content: '',
+      })
+    }, 200)
+  }
 
+  useEffect(() => {
+    if (visible) {
+      showAlert()
+      hideAlert()
+    }
+  }, [visible])
   if (alertType === 'success' && visible) {
     return (
-      <SuccessAlert active={visible}>
+      <SuccessAlert active={!!visible} animation={animation}>
         <AiOutlineCheck />
         <span>{content}</span>
         <span className="load"></span>
@@ -22,7 +47,7 @@ export function AlertMessageBox() {
     )
   } else if (alertType === 'warning' && visible) {
     return (
-      <WarningAlert active={visible}>
+      <WarningAlert active={visible} animation={animation}>
         <AiOutlineWarning />
         <span>{content}</span>
         <span className="load"></span>
@@ -30,7 +55,7 @@ export function AlertMessageBox() {
     )
   } else if (alertType === 'error' && visible) {
     return (
-      <ErrorAlert active={visible}>
+      <ErrorAlert active={visible} animation={animation}>
         <AiOutlineClose />
         <span>{content}</span>
         <span className="load"></span>
