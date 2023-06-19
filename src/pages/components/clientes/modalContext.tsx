@@ -1,5 +1,5 @@
-import React, { createContext, useState } from 'react'
-
+import React, { useState } from 'react'
+import { createContext } from 'use-context-selector'
 interface ModalProviderProps {
   children: React.ReactNode
 }
@@ -7,14 +7,13 @@ interface ModalContextType {
   OpenModal: () => void
   CloseModal: () => void
   isModalOpen: boolean
-  clienteSelecionado: {}
+  selectedClient: {}
   changeSelectedClient: (cliente: string) => void
 }
 export const ModalContext = createContext({} as ModalContextType)
 export function ModalProvider({ children }: ModalProviderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [clienteSelecionado, setClienteSelecionado] = useState('')
-  // const [clienteSelecionado, setClienteSelecionado] = useState(null)
+  const [selectedClient, setClienteSelecionado] = useState('')
   function changeSelectedClient(client: string) {
     setClienteSelecionado(client)
   }
@@ -30,7 +29,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
         OpenModal,
         CloseModal,
         isModalOpen,
-        clienteSelecionado,
+        selectedClient,
         changeSelectedClient,
       }}
     >

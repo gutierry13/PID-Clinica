@@ -1,21 +1,23 @@
 import { motion } from 'framer-motion'
-import { TabelaClientes } from './tabelaCliente'
 import { CustomerContainer } from '../../../globalStyles'
-import { ClienteModal } from './clienteModal'
-import { ClienteProvider } from './clienteContext'
-import { useContext } from 'react'
+import { ClientModal } from './clientModal'
+import { ClientProvider } from './clientContext'
+// import { useContext } from 'react'
 import { AddButtonStyles } from '../styles'
 import { ModalContext } from './modalContext'
 import { AlertMessageBox } from '../alertMessageBox'
-
-export function Clientes() {
-  const { OpenModal } = useContext(ModalContext)
-  function handleOpenNewClienteModal() {
+import { TabelaClients } from './tableClient'
+import { useContextSelector } from 'use-context-selector'
+export function Clients() {
+  const OpenModal = useContextSelector(ModalContext, (context) => {
+    return context.OpenModal
+  })
+  function handleOpenNewClientModal() {
     OpenModal()
   }
 
   return (
-    <ClienteProvider>
+    <ClientProvider>
       <motion.div
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -25,7 +27,7 @@ export function Clientes() {
         <CustomerContainer>
           <div className="text">
             <h1>Clientes</h1>
-            <p>Tela de gerenciamento e cadastro de clientes</p>
+            <p>Tela de gerenciamento e cadastro de Clientes</p>
           </div>
 
           {/* <AlertMessageBox alertType="error" content="Erro" visible={true} />
@@ -34,14 +36,14 @@ export function Clientes() {
             content="Problema"
             visible={true}
           /> */}
-          <AddButtonStyles onClick={handleOpenNewClienteModal}>
+          <AddButtonStyles onClick={handleOpenNewClientModal}>
             Cadastrar Cliente
           </AddButtonStyles>
-          <ClienteModal />
+          <ClientModal />
           <AlertMessageBox />
-          <TabelaClientes />
+          <TabelaClients />
         </CustomerContainer>
       </motion.div>
-    </ClienteProvider>
+    </ClientProvider>
   )
 }

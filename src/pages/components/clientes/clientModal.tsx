@@ -1,13 +1,14 @@
 import { FormEvent, useState, useContext, useEffect } from 'react'
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
-import { ClienteContext } from './clienteContext'
+import { ClientContext } from './clientContext'
 import Modal from 'react-modal'
 import { ContainerModalForm } from '../../../globalStyles'
 import { AddButtonStyles, EditButtonStyles } from '../styles'
 import { IoClose } from 'react-icons/io5'
 import { ModalContext } from './modalContext'
+import { useContextSelector } from 'use-context-selector'
 
-interface Cliente {
+interface Client {
   cpf: string
   nome: string
   dtNascimento: Date | string
@@ -19,12 +20,31 @@ interface Cliente {
   estadoCivil: string
 }
 
-export function ClienteModal() {
-  const { isModalOpen, CloseModal, clienteSelecionado, changeSelectedClient } =
-    useContext(ModalContext)
+export function ClientModal() {
+  // const { , , ,  } =
+  //   useContextSelector(ModalContext, (context) => {
+  //     return {
+  //       isModalOpen: context.isModalOpen,
+  //       selectedClient: context.selectedClient,
+  //       changeSelectedClient: context.changeSelectedClient,
+  //       CloseModal: context.CloseModal,
+  //     }
+  //   })
+  const isModalOpen = useContextSelector(ModalContext, (context) => {
+    return context.isModalOpen
+  })
+  const CloseModal = useContextSelector(ModalContext, (context) => {
+    return context.CloseModal
+  })
+  const selectedClient = useContextSelector(ModalContext, (context) => {
+    return context.selectedClient
+  })
+  const changeSelectedClient = useContextSelector(ModalContext, (context) => {
+    return context.changeSelectedClient
+  })
 
-  const { createCliente, updateCliente, clientes } = useContext(ClienteContext)
-  const [cliente, setCliente] = useState<Cliente>({
+  const { createClient, updateClient, clients } = useContext(ClientContext)
+  const [Client, setClient] = useState<Client>({
     cpf: '',
     nome: '',
     dtNascimento: new Date(),
@@ -59,11 +79,11 @@ export function ClienteModal() {
   //      isModalOpen &&
   // ((event?.target as HTMLElement).classList.contains('editar') as boolean)
   useEffect(() => {
-    if (isModalOpen && clienteSelecionado) {
+    if (isModalOpen && selectedClient) {
       setOpenModalWithUpdateButton(true)
-      clientes.filter((item) => {
-        if (item.cpf === clienteSelecionado) {
-          setCliente({
+      clients.filter((item) => {
+        if (item.cpf === selectedClient) {
+          setClient({
             cpf: item.cpf,
             nome: item.nome,
             dtNascimento: Intl.DateTimeFormat('en-CA').format(
@@ -82,7 +102,7 @@ export function ClienteModal() {
       changeSelectedClient('')
       setOpenModalWithUpdateButton(false)
       // CloseModal()
-      setCliente({
+      setClient({
         cpf: '',
         nome: '',
         dtNascimento: new Date(),
@@ -94,11 +114,11 @@ export function ClienteModal() {
         estadoCivil: '',
       })
     }
-  }, [isModalOpen, clienteSelecionado, clientes, changeSelectedClient])
-  async function handleSubmitCadastrarCliente(event: FormEvent) {
+  }, [isModalOpen, selectedClient, clients, changeSelectedClient])
+  async function handleSubmitCadastrarClient(event: FormEvent) {
     event.preventDefault()
-    await createCliente(cliente)
-    setCliente({
+    await createClient(Client)
+    setClient({
       cpf: '',
       nome: '',
       dtNascimento: new Date(),
@@ -117,9 +137,9 @@ export function ClienteModal() {
 
     CloseModal()
   }
-  async function handleUpdateCliente(event: FormEvent) {
+  async function handleUpdateClient(event: FormEvent) {
     event.preventDefault()
-    await updateCliente(cliente)
+    await updateClient(Client)
     CloseModal()
   }
   return (
@@ -141,109 +161,114 @@ export function ClienteModal() {
             id="nome"
             name="Nome"
             type="text"
-            value={cliente.nome}
-            change={(e) => setCliente({ ...cliente, nome: e.target.value })}
-            title={cliente.nome}
+            value={Client.nome}
+            change={(e) => setClient({ ...Client, nome: e.target.value })}
+            required
+            title={Client.nome}
           />
           <InputTemplate
             id="cpf"
             name="CPF"
             disabled={openModalWithUpdateButton}
-            title={cliente.cpf}
+            title={Client.cpf}
             type="text"
-            value={cliente.cpf}
+            value={Client.cpf}
             required
             change={(e) => {
-              setCliente({ ...cliente, cpf: e.target.value })
+              setClient({ ...Client, cpf: e.target.value })
               setValidateFormAndAbleButton({
                 ...validateFormAndAbleButton,
                 cpf: regex.cpf.test(e.target.value),
               })
             }}
-            validated={regex.cpf.test(cliente.cpf)}
+            validated={regex.cpf.test(Client.cpf)}
           />
           <InputTemplate
             id="email"
             name="Email"
             type="email"
-            value={cliente.email}
-            change={(e) => setCliente({ ...cliente, email: e.target.value })}
-            title={cliente.email}
+            value={Client.email}
+            required
+            change={(e) => setClient({ ...Client, email: e.target.value })}
+            title={Client.email}
           />
           <InputTemplate
             id="dtNascimento"
             name="Data de Nascimento"
             type="date"
-            value={cliente.dtNascimento.toString()}
+            value={Client.dtNascimento.toString()}
+            required
             change={(e) =>
-              setCliente({ ...cliente, dtNascimento: e.target.value })
+              setClient({ ...Client, dtNascimento: e.target.value })
             }
           />
           <InputTemplate
             id="telefone"
             name="Telefone"
             type="tel"
-            value={cliente.telefone}
-            title={cliente.telefone}
+            value={Client.telefone}
+            title={Client.telefone}
             required
             change={(e) => {
-              setCliente({ ...cliente, telefone: e.target.value })
+              setClient({ ...Client, telefone: e.target.value })
               setValidateFormAndAbleButton({
                 ...validateFormAndAbleButton,
                 numero: regex.numero.test(e.target.value),
               })
             }}
-            validated={regex.numero.test(cliente.telefone)}
+            validated={regex.numero.test(Client.telefone)}
           />
           <InputTemplate
             id="ocupacao"
             name="Ocupação"
             type="text"
-            value={cliente.ocupacao}
-            change={(e) => setCliente({ ...cliente, ocupacao: e.target.value })}
-            title={cliente.ocupacao}
+            value={Client.ocupacao}
+            change={(e) => setClient({ ...Client, ocupacao: e.target.value })}
+            title={Client.ocupacao}
+            required
           />
           <SelectSexoTemplate
             value1="Masculino"
             value2="Feminino"
-            value={cliente.sexo}
-            change={(e) => setCliente({ ...cliente, sexo: e.target.value })}
+            value={Client.sexo}
+            change={(e) => setClient({ ...Client, sexo: e.target.value })}
           />
           <InputTemplate
             id="cep"
             name="CEP"
             type="text"
-            value={cliente.cep}
+            value={Client.cep}
             required
-            title={cliente.cep}
+            title={Client.cep}
             change={(e) => {
-              setCliente({ ...cliente, cep: e.target.value })
+              setClient({ ...Client, cep: e.target.value })
               setValidateFormAndAbleButton({
                 ...validateFormAndAbleButton,
                 cep: regex.cep.test(e.target.value),
               })
             }}
-            validated={regex.cep.test(cliente.cep)}
+            validated={regex.cep.test(Client.cep)}
           />
           <InputTemplate
             id="estdCivil"
             name="Estado Civil"
+            required
             type="text"
-            value={cliente.estadoCivil}
+            value={Client.estadoCivil}
             change={(e) =>
-              setCliente({ ...cliente, estadoCivil: e.target.value })
+              setClient({ ...Client, estadoCivil: e.target.value })
             }
           />
         </form>
         <div className="buttons">
           {openModalWithUpdateButton ? (
-            <EditButtonStyles onClick={handleUpdateCliente}>
+            <EditButtonStyles onClick={handleUpdateClient}>
               Alterar
             </EditButtonStyles>
           ) : (
             <AddButtonStyles
               type="submit"
-              onClick={handleSubmitCadastrarCliente}
+              onClick={handleSubmitCadastrarClient}
               disabled={
                 !validateFormAndAbleButton.cpf.valueOf() ||
                 !validateFormAndAbleButton.numero.valueOf() ||

@@ -1,32 +1,38 @@
 import { ContainerTable } from '../../../globalStyles'
 import { ChangeEvent, MouseEvent, useContext, useState } from 'react'
-import { ClienteContext } from './clienteContext'
-// import { ClienteModal } from './clienteModal'
+// import { ClientModal } from './ClientModal'
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
 
 import { ModalContext } from './modalContext'
+import { ClientContext } from './clientContext'
+import { useContextSelector } from 'use-context-selector'
 
-export function TabelaClientes() {
-  const { OpenModal, changeSelectedClient } = useContext(ModalContext)
+export function TabelaClients() {
+  const OpenModal = useContextSelector(ModalContext, (context) => {
+    return context.OpenModal
+  })
+  const changeSelectedClient = useContextSelector(ModalContext, (context) => {
+    return context.changeSelectedClient
+  })
   const [clientCpfInputSearch, setClientCpfInputSearch] = useState('')
-  const { clientes, deleteCliente, searchClient } = useContext(ClienteContext)
+  const { clients, deleteClient, searchClient } = useContext(ClientContext)
 
   function handlePreencherValores(event: MouseEvent) {
-    const clienteSelecionadoCpf = (
+    const ClientSelecionadoCpf = (
       (event.currentTarget as HTMLElement).parentElement?.parentElement
         ?.children[0] as HTMLElement
     ).innerText
-    changeSelectedClient(clienteSelecionadoCpf)
+    changeSelectedClient(ClientSelecionadoCpf)
     OpenModal()
   }
 
-  function handleDeleteCliente(event: MouseEvent) {
-    if (window.confirm('Deletar cliente') === true) {
+  function handleDeleteClient(event: MouseEvent) {
+    if (window.confirm('Deletar Client') === true) {
       const cpfElementValue = (
         (event.currentTarget as HTMLElement).parentElement?.parentElement
           ?.children[0] as HTMLElement
       ).innerText
-      deleteCliente(cpfElementValue)
+      deleteClient(cpfElementValue)
     }
   }
 
@@ -41,11 +47,12 @@ export function TabelaClientes() {
   return (
     <ContainerTable>
       <div>
-        <label htmlFor="search">Search</label>
+        {/* <label htmlFor="search">Search</label> */}
         <input
           type="text"
           id="search"
           onChange={handleSearchClientForCPF}
+          placeholder="Buscar Clients"
           value={clientCpfInputSearch}
         />
       </div>
@@ -64,24 +71,24 @@ export function TabelaClientes() {
           </tr>
         </thead>
         <tbody>
-          {clientes.map((cliente) => {
+          {clients.map((Client) => {
             return (
-              <tr key={cliente.cpf}>
-                <td id="cpf">{cliente.cpf}</td>
-                <td>{cliente.nome}</td>
+              <tr key={Client.cpf}>
+                <td id="cpf">{Client.cpf}</td>
+                <td>{Client.nome}</td>
                 <td>
                   {String(
                     Intl.DateTimeFormat('pt-BR').format(
-                      new Date(cliente.dtNascimento),
+                      new Date(Client.dtNascimento),
                     ),
                   )}
                 </td>
-                <td>{cliente.email}</td>
-                <td>{cliente.telefone}</td>
-                <td>{cliente.ocupacao}</td>
-                <td>{cliente.sexo}</td>
-                <td>{cliente.cep}</td>
-                <td>{cliente.estadoCivil}</td>
+                <td>{Client.email}</td>
+                <td>{Client.telefone}</td>
+                <td>{Client.ocupacao}</td>
+                <td>{Client.sexo}</td>
+                <td>{Client.cep}</td>
+                <td>{Client.estadoCivil}</td>
                 <td>
                   <AiOutlineEdit
                     size={22}
@@ -95,7 +102,7 @@ export function TabelaClientes() {
                     className="excluir"
                     size={22}
                     style={{ color: '#902727' }}
-                    onClick={handleDeleteCliente}
+                    onClick={handleDeleteClient}
                   ></AiOutlineDelete>
                 </td>
               </tr>
