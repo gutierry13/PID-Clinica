@@ -1,18 +1,19 @@
 import { motion } from 'framer-motion'
 import { CustomerContainer } from '../../../globalStyles'
 import { TabelaAnimais } from './tabelaAnimais'
-import { AnimalModal } from './animalModal'
 import { AnimalProvider } from './animalContext'
-import { useState } from 'react'
 import { AddButtonStyles } from '../styles'
+import { useContextSelector } from 'use-context-selector'
+import { ModalContext } from './modalContext'
+import { AnimalModal } from './animalModal'
 
 export function Animais() {
-  const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
-  function handleOpenNewClienteModal() {
-    setNewClienteModalOpen(true)
-  }
-  function handleCloseNewClienteModal() {
-    setNewClienteModalOpen(false)
+  const OpenModal = useContextSelector(ModalContext, (context) => {
+    return context.OpenModal
+  })
+  console.log(OpenModal)
+  function handleOpenNewAnimalModal() {
+    OpenModal()
   }
   return (
     <AnimalProvider>
@@ -32,13 +33,10 @@ export function Animais() {
               cum ab inventore nemo voluptas?
             </p>
           </div>
-          <AddButtonStyles onClick={handleOpenNewClienteModal}>
-            Abrir modal
+          <AddButtonStyles onClick={handleOpenNewAnimalModal}>
+            Cadastrar Animal
           </AddButtonStyles>
-          <AnimalModal
-            open={newClienteModalOpen}
-            close={handleCloseNewClienteModal}
-          />
+          <AnimalModal />
           <TabelaAnimais />
         </CustomerContainer>
       </motion.div>

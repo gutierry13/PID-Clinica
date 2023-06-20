@@ -4,7 +4,6 @@ import { AnimalContext } from './animalContext'
 
 export function TabelaAnimais() {
   const { animals } = useContext(AnimalContext)
-  console.log(animals)
   return (
     <ContainerTable>
       <table>
