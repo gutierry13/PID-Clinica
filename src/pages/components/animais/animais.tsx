@@ -6,6 +6,7 @@ import { AddButtonStyles } from '../styles'
 import { useContextSelector } from 'use-context-selector'
 import { ModalContext } from './modalContext'
 import { AnimalModal } from './animalModal'
+import { AlertMessageBox } from '../alertMessageBox'
 
 export function Animais() {
   const OpenModal = useContextSelector(ModalContext, (context) => {
@@ -36,6 +37,7 @@ export function Animais() {
             Cadastrar Animal
           </AddButtonStyles>
           <AnimalModal />
+          <AlertMessageBox />
           <TabelaAnimais />
         </CustomerContainer>
       </motion.div>

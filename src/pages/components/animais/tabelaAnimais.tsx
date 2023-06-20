@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import { ContainerTable } from '../../../globalStyles'
 import { AnimalContext } from './animalContext'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
@@ -6,7 +6,8 @@ import { useContextSelector } from 'use-context-selector'
 import { ModalContext } from './modalContext'
 
 export function TabelaAnimais() {
-  const { animals, deleteAnimal } = useContext(AnimalContext)
+  const { animals, deleteAnimal, searchAnimal } = useContext(AnimalContext)
+  const [animalCodeForSearch, setAnimalCodeForSearch] = useState('')
   const OpenModal = useContextSelector(ModalContext, (context) => {
     return context.OpenModal
   })
@@ -31,9 +32,25 @@ export function TabelaAnimais() {
       deleteAnimal(animalCodValue)
     }
   }
-
+  function handleSearchAnimalForCode(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.value.length >= 0) {
+      setAnimalCodeForSearch(event.target.value)
+      searchAnimal(event.target.value)
+    } else {
+      setAnimalCodeForSearch('')
+    }
+  }
   return (
     <ContainerTable>
+      <div>
+        <input
+          type="text"
+          id="search"
+          onChange={handleSearchAnimalForCode}
+          placeholder="Buscar animais"
+          value={animalCodeForSearch}
+        />
+      </div>
       <table>
         <thead>
           <tr>

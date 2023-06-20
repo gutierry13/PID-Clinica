@@ -6,10 +6,12 @@ import {
   AiOutlineWarning,
 } from 'react-icons/ai'
 import { ClientContext } from './clientes/clientContext'
+// import { ClientContext } from './clientes/clientContext'
 
 export function AlertMessageBox() {
   const { alertMessageBoxInfo, setAlertMessageBoxInfo } =
     useContext(ClientContext)
+
   const { alertType, content, visible } = alertMessageBoxInfo
   const [animation, setAnimation] = useState('')
   function showAlert() {
