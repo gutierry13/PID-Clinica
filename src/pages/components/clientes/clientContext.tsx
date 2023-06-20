@@ -43,8 +43,11 @@ export function ClientProvider({ children }: ClientProviderProps) {
     content: '',
   })
   const [clients, setClients] = useState<ClientsTypes[]>([])
-  useEffect(() => {
+  function getClients() {
     api.get('/clientes').then((response) => setClients(response.data))
+  }
+  useEffect(() => {
+    getClients()
   }, [])
   const searchClient = useCallback(async (clientCpf: String) => {
     if (clientCpf && clientCpf !== '') {
@@ -65,6 +68,7 @@ export function ClientProvider({ children }: ClientProviderProps) {
           content: response.data.mensagem,
         })
         setClients([...clients, JSON.parse(data)])
+        getClients()
       } catch (error: any) {
         setAlertMessageBoxInfo({
           visible: true,
@@ -81,46 +85,70 @@ export function ClientProvider({ children }: ClientProviderProps) {
   )
   const updateClient = useCallback(
     async (clientInput: ClientsTypes) => {
-      await api.put(`/clientes`, clientInput).then((response) => {
-        console.log(response.data)
-        setAlertMessageBoxInfo({
-          visible: true,
-          alertType: response.data.status ? 'success' : 'error',
-          content: response.data.mensagem,
-        })
-      })
-
-      clients.forEach((client) => {
-        if (client.cpf === clientInput.cpf) {
-          client.nome = clientInput.nome
-          client.dtNascimento = clientInput.dtNascimento
-          client.email = clientInput.email
-          client.telefone = clientInput.telefone
-          client.ocupacao = clientInput.ocupacao
-          client.sexo = clientInput.sexo
-          client.cep = clientInput.cep
-          client.estadoCivil = clientInput.estadoCivil
-        }
-      })
-    },
-    [clients],
-  )
-  const deleteClient = useCallback(
-    async (clientCpf: String) => {
-      await api
-        .delete(`/clientes`, {
-          data: {
-            cpf: clientCpf,
-          },
-        })
-        .then((response) => {
-          setClients(clients.filter((client) => client.cpf !== clientCpf))
+      try {
+        await api.put(`/clientes`, clientInput).then((response) => {
+          console.log(response.data)
           setAlertMessageBoxInfo({
             visible: true,
             alertType: response.data.status ? 'success' : 'error',
             content: response.data.mensagem,
           })
         })
+
+        clients.forEach((client) => {
+          if (client.cpf === clientInput.cpf) {
+            client.nome = clientInput.nome
+            client.dtNascimento = clientInput.dtNascimento
+            client.email = clientInput.email
+            client.telefone = clientInput.telefone
+            client.ocupacao = clientInput.ocupacao
+            client.sexo = clientInput.sexo
+            client.cep = clientInput.cep
+            client.estadoCivil = clientInput.estadoCivil
+          }
+        })
+      } catch (error: any) {
+        setAlertMessageBoxInfo({
+          visible: true,
+          alertType: error.response.data.status ? 'success' : 'error',
+          content: String(error.response.data.mensagem).includes(
+            'Duplicate entry',
+          )
+            ? 'CPF já cadastrado'
+            : error.response.data.mensagem,
+        })
+      }
+    },
+    [clients],
+  )
+  const deleteClient = useCallback(
+    async (clientCpf: String) => {
+      try {
+        await api
+          .delete(`/clientes`, {
+            data: {
+              cpf: clientCpf,
+            },
+          })
+          .then((response) => {
+            setClients(clients.filter((client) => client.cpf !== clientCpf))
+            setAlertMessageBoxInfo({
+              visible: true,
+              alertType: response.data.status ? 'success' : 'error',
+              content: response.data.mensagem,
+            })
+          })
+      } catch (error: any) {
+        setAlertMessageBoxInfo({
+          visible: true,
+          alertType: error.response.data.status ? 'success' : 'error',
+          content: String(error.response.data.mensagem).includes(
+            'Duplicate entry',
+          )
+            ? 'CPF já cadastrado'
+            : error.response.data.mensagem,
+        })
+      }
     },
     [clients],
   )

@@ -29,13 +29,6 @@ export function Clients() {
             <h1>Clientes</h1>
             <p>Tela de gerenciamento e cadastro de Clientes</p>
           </div>
-
-          {/* <AlertMessageBox alertType="error" content="Erro" visible={true} />
-          <AlertMessageBox
-            alertType="warning"
-            content="Problema"
-            visible={true}
-          /> */}
           <AddButtonStyles onClick={handleOpenNewClientModal}>
             Cadastrar Cliente
           </AddButtonStyles>

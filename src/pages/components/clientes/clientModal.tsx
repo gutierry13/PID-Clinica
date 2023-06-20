@@ -21,27 +21,15 @@ interface Client {
 }
 
 export function ClientModal() {
-  // const { , , ,  } =
-  //   useContextSelector(ModalContext, (context) => {
-  //     return {
-  //       isModalOpen: context.isModalOpen,
-  //       selectedClient: context.selectedClient,
-  //       changeSelectedClient: context.changeSelectedClient,
-  //       CloseModal: context.CloseModal,
-  //     }
-  //   })
-  const isModalOpen = useContextSelector(ModalContext, (context) => {
-    return context.isModalOpen
-  })
-  const CloseModal = useContextSelector(ModalContext, (context) => {
-    return context.CloseModal
-  })
-  const selectedClient = useContextSelector(ModalContext, (context) => {
-    return context.selectedClient
-  })
-  const changeSelectedClient = useContextSelector(ModalContext, (context) => {
-    return context.changeSelectedClient
-  })
+  const { isModalOpen, selectedClient, changeSelectedClient, CloseModal } =
+    useContextSelector(ModalContext, (context) => {
+      return {
+        isModalOpen: context.isModalOpen,
+        selectedClient: context.selectedClient,
+        changeSelectedClient: context.changeSelectedClient,
+        CloseModal: context.CloseModal,
+      }
+    })
 
   const { createClient, updateClient, clients } = useContext(ClientContext)
   const [Client, setClient] = useState<Client>({

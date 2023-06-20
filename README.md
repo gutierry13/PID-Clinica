@@ -1,0 +1,3 @@
+Usabilidade
+Performance
+Qualidade de código

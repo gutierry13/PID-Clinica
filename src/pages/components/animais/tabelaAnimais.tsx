@@ -3,38 +3,39 @@ import { ContainerTable } from '../../../globalStyles'
 import { AnimalContext } from './animalContext'
 
 export function TabelaAnimais() {
-  const { animais } = useContext(AnimalContext)
+  const { animals } = useContext(AnimalContext)
+  console.log(animals)
   return (
     <ContainerTable>
       <table>
         <thead>
           <tr>
-            <th>Animal ID</th>
+            <th>Codigo</th>
             <th>Nome</th>
-            <th>Idade</th>
             <th>Raça</th>
             <th>Espécie</th>
-            <th>Gênero</th>
+            <th>Idade</th>
+            <th>Sexo</th>
             <th>Peso</th>
             <th>Cor</th>
             <th>Porte</th>
-            <th>Histórico de Saúde</th>
+            <th>Saude</th>
           </tr>
         </thead>
         <tbody>
-          {animais.map((animal) => {
+          {animals.map((animal) => {
             return (
-              <tr>
-                <td>{animal.animalID}</td>
+              <tr key={String(animal.codigo)}>
+                <td>{animal.codigo}</td>
                 <td>{animal.nome}</td>
-                <td>{animal.idade}</td>
                 <td>{animal.raca}</td>
                 <td>{animal.especie}</td>
-                <td>{animal.genero}</td>
+                <td>{animal.idade}</td>
+                <td>{animal.sexo}</td>
                 <td>{animal.peso}</td>
                 <td>{animal.cor}</td>
                 <td>{animal.porte}</td>
-                <td>{animal.historicoSaude}</td>
+                <td>{animal.saude}</td>
               </tr>
             )
           })}

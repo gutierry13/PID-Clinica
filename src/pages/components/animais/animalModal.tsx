@@ -19,7 +19,6 @@ interface ClienteModalProps {
   close: () => void
 }
 export function AnimalModal({ open, close }: ClienteModalProps) {
-  const { createAnimal } = useContext(AnimalContext)
   const [animal, setAnimal] = useState<Animal>({
     animalID: '',
     nome: '',
@@ -32,10 +31,9 @@ export function AnimalModal({ open, close }: ClienteModalProps) {
     porte: '',
     historicoSaude: '',
   })
-  console.log(animal)
   function handleSubmitAnimal(event: FormEvent) {
     event.preventDefault()
-    createAnimal(animal)
+    // createAnimal(animal)
   }
   return (
     <Modal isOpen={open} onRequestClose={close}>

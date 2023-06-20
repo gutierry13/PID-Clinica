@@ -47,7 +47,6 @@ export function TabelaClients() {
   return (
     <ContainerTable>
       <div>
-        {/* <label htmlFor="search">Search</label> */}
         <input
           type="text"
           id="search"
