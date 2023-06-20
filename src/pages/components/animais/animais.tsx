@@ -11,7 +11,6 @@ export function Animais() {
   const OpenModal = useContextSelector(ModalContext, (context) => {
     return context.OpenModal
   })
-  console.log(OpenModal)
   function handleOpenNewAnimalModal() {
     OpenModal()
   }

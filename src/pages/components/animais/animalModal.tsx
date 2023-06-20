@@ -1,12 +1,12 @@
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useContext, useEffect } from 'react'
 import Modal from 'react-modal'
 import { useContextSelector } from 'use-context-selector'
 import { ModalContext } from './modalContext'
 import { ContainerModalForm } from '../../../globalStyles'
-import { AddButtonStyles } from '../styles'
+import { AddButtonStyles, EditButtonStyles } from '../styles'
+import { AnimalContext } from './animalContext'
 interface Animal {
-  codigo: String
   nome: string
   idade: string
   raca: string
@@ -18,19 +18,19 @@ interface Animal {
   saude: string
 }
 export function AnimalModal() {
-  const { isModalOpen, CloseModal } = useContextSelector(
-    ModalContext,
-    (context) => {
+  const { isModalOpen, CloseModal, selectedAnimal, changeSelectedAnimal } =
+    useContextSelector(ModalContext, (context) => {
       return {
         isModalOpen: context.isModalOpen,
-        selectedClient: context.selectedClient,
-        changeSelectedClient: context.changeSelectedClient,
+        selectedAnimal: context.selectedAnimal,
+        changeSelectedAnimal: context.changeSelectedAnimal,
         CloseModal: context.CloseModal,
       }
-    },
-  )
+    })
+  const { animals, createAnimal, updateAnimal } = useContext(AnimalContext)
+  const [openModalWithUpdateButton, setOpenModalWithUpdateButton] =
+    useState(false)
   const [animal, setAnimal] = useState<Animal>({
-    codigo: '',
     nome: '',
     idade: '',
     raca: '',
@@ -41,8 +41,64 @@ export function AnimalModal() {
     porte: 'pequeno',
     saude: '',
   })
-  function handleSubmitRegisterNewAnimal(event: FormEvent) {
+  useEffect(() => {
+    if (isModalOpen && selectedAnimal) {
+      setOpenModalWithUpdateButton(true)
+      animals.filter((item) => {
+        if (item.codigo === selectedAnimal) {
+          setAnimal({
+            nome: item.nome,
+            idade: item.idade,
+            raca: item.raca,
+            especie: item.especie,
+            sexo: item.sexo,
+            peso: item.peso,
+            cor: item.cor,
+            porte: item.porte,
+            saude: item.saude,
+          })
+        }
+      })
+    } else {
+      changeSelectedAnimal('')
+      setOpenModalWithUpdateButton(false)
+      CloseModal()
+      setAnimal({
+        nome: '',
+        idade: '',
+        raca: '',
+        especie: '',
+        sexo: 'macho',
+        peso: '',
+        cor: '',
+        porte: 'pequeno',
+        saude: '',
+      })
+    }
+  }, [isModalOpen, selectedAnimal, animals, changeSelectedAnimal])
+  async function handleSubmitRegisterNewAnimal(event: FormEvent) {
     event.preventDefault()
+    await createAnimal(animal)
+    setAnimal({
+      nome: '',
+      idade: '',
+      raca: '',
+      especie: '',
+      sexo: 'macho',
+      peso: '',
+      cor: '',
+      porte: 'pequeno',
+      saude: '',
+    })
+    CloseModal()
+  }
+  async function handleUpdateAnimal(event: FormEvent) {
+    event.preventDefault()
+    await updateAnimal({
+      ...animal,
+      codigo: String(selectedAnimal),
+    })
+    CloseModal()
   }
   return (
     <Modal
@@ -52,18 +108,11 @@ export function AnimalModal() {
       className="react-modal-content"
     >
       <ContainerModalForm>
-        {/* <div className="title">
+        <div className="title">
           <h1>
-            {openModalWithUpdateButton ? 'Editar Cliente' : 'Cadastrar Cliente'}
+            {openModalWithUpdateButton ? 'Editar Animal' : 'Cadastrar Animal'}
           </h1>
-        </div> */}
-        {/* <InputTemplate
-          id="id"
-          name="ID"
-          type="text"
-          value={animal.codigo.toString()}
-          change={(e) => setAnimal({ ...animal, codigo: e.target.value })}
-        /> */}
+        </div>
         <InputTemplate
           id="nome"
           name="Nome"
@@ -71,7 +120,6 @@ export function AnimalModal() {
           value={animal.nome}
           change={(e) => setAnimal({ ...animal, nome: e.target.value })}
         />
-
         <InputTemplate
           id="raca"
           name="Raça"
@@ -89,7 +137,7 @@ export function AnimalModal() {
         <InputTemplate
           id="idade"
           name="Idade"
-          type="number"
+          type="text"
           value={animal.idade}
           change={(e) => setAnimal({ ...animal, idade: e.target.value })}
         />
@@ -102,7 +150,7 @@ export function AnimalModal() {
         <InputTemplate
           id="peso"
           name="Peso"
-          type="number"
+          type="text"
           value={animal.peso}
           change={(e) => setAnimal({ ...animal, peso: e.target.value })}
         />
@@ -140,21 +188,18 @@ export function AnimalModal() {
           value={animal.saude}
           change={(e) => setAnimal({ ...animal, saude: e.target.value })}
         />
-        {/* <EditButtonStyles onClick={handleUpdateAnimal}>
-          Alterar
-        </EditButtonStyles>
-        ) : ( */}
-        <AddButtonStyles
-          type="submit"
-          onClick={handleSubmitRegisterNewAnimal}
-          // disabled={
-          //   !validateFormAndAbleButton.cpf.valueOf() ||
-          //   !validateFormAndAbleButton.numero.valueOf() ||
-          //   !validateFormAndAbleButton.cep.valueOf()
-          // }
-        >
-          Cadastrar
-        </AddButtonStyles>
+        {openModalWithUpdateButton ? (
+          <EditButtonStyles onClick={handleUpdateAnimal}>
+            Alterar
+          </EditButtonStyles>
+        ) : (
+          <AddButtonStyles
+            type="submit"
+            onClick={handleSubmitRegisterNewAnimal}
+          >
+            Cadastrar
+          </AddButtonStyles>
+        )}
       </ContainerModalForm>
     </Modal>
   )

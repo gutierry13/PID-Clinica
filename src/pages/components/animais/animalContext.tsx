@@ -8,7 +8,7 @@ import {
 import { api } from '../../../services/api'
 
 interface Animal {
-  codigo: String
+  codigo?: String
   nome: string
   idade: string
   raca: string

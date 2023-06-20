@@ -1,9 +1,37 @@
 import { useContext } from 'react'
 import { ContainerTable } from '../../../globalStyles'
 import { AnimalContext } from './animalContext'
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+import { useContextSelector } from 'use-context-selector'
+import { ModalContext } from './modalContext'
 
 export function TabelaAnimais() {
-  const { animals } = useContext(AnimalContext)
+  const { animals, deleteAnimal } = useContext(AnimalContext)
+  const OpenModal = useContextSelector(ModalContext, (context) => {
+    return context.OpenModal
+  })
+  const changeSelectedAnimal = useContextSelector(ModalContext, (context) => {
+    return context.changeSelectedAnimal
+  })
+  function handlePreencherValores(event: MouseEvent) {
+    const selectedAnimalCod = (
+      (event.currentTarget as HTMLElement).parentElement?.parentElement
+        ?.children[0] as HTMLElement
+    ).innerText
+    changeSelectedAnimal(selectedAnimalCod)
+    OpenModal()
+  }
+
+  function handleDeleteAnimal(event: MouseEvent) {
+    if (window.confirm('Deletar Client') === true) {
+      const animalCodValue = (
+        (event.currentTarget as HTMLElement).parentElement?.parentElement
+          ?.children[0] as HTMLElement
+      ).innerText
+      deleteAnimal(animalCodValue)
+    }
+  }
+
   return (
     <ContainerTable>
       <table>
@@ -35,6 +63,22 @@ export function TabelaAnimais() {
                 <td>{animal.cor}</td>
                 <td>{animal.porte}</td>
                 <td>{animal.saude}</td>
+                <td>
+                  <AiOutlineEdit
+                    size={22}
+                    className="editar"
+                    style={{ color: '#808019' }}
+                    onClick={handlePreencherValores}
+                  ></AiOutlineEdit>
+                </td>
+                <td>
+                  <AiOutlineDelete
+                    className="excluir"
+                    size={22}
+                    style={{ color: '#902727' }}
+                    onClick={handleDeleteAnimal}
+                  ></AiOutlineDelete>
+                </td>
               </tr>
             )
           })}

@@ -7,15 +7,15 @@ interface ModalContextType {
   OpenModal: () => void
   CloseModal: () => void
   isModalOpen: boolean
-  selectedClient: {}
-  changeSelectedClient: (cliente: string) => void
+  selectedAnimal: {}
+  changeSelectedAnimal: (cliente: string) => void
 }
 export const ModalContext = createContext({} as ModalContextType)
 export function AnimalModalProvider({ children }: ModalProviderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedClient, setClienteSelecionado] = useState('')
-  function changeSelectedClient(client: string) {
-    setClienteSelecionado(client)
+  const [selectedAnimal, setSelectedAnimal] = useState('')
+  function changeSelectedAnimal(client: string) {
+    setSelectedAnimal(client)
   }
   function OpenModal() {
     setIsModalOpen(true)
@@ -29,8 +29,8 @@ export function AnimalModalProvider({ children }: ModalProviderProps) {
         OpenModal,
         CloseModal,
         isModalOpen,
-        selectedClient,
-        changeSelectedClient,
+        selectedAnimal,
+        changeSelectedAnimal,
       }}
     >
       {children}
