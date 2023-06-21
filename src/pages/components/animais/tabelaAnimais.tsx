@@ -68,6 +68,15 @@ export function TabelaAnimais() {
         </thead>
         <tbody>
           {animals.map((animal) => {
+            function calcIdade(meses: number): String {
+              if (meses < 12) {
+                return `${meses % 12} meses`
+              }
+              return `${Math.floor(meses / 12)} ${
+                meses === 12 ? 'ano' : 'anos'
+              } e ${meses % 12} meses`
+            }
+            const idadeCalculada = calcIdade(animal.idade)
             return (
               <tr key={String(animal.codigo)}>
                 <td>{animal.codigo}</td>
@@ -81,11 +90,11 @@ export function TabelaAnimais() {
                 <td>
                   {animal.raca.charAt(0).toUpperCase() + animal.raca.slice(1)}
                 </td>
-                <td>{animal.idade}</td>
+                <td>{idadeCalculada}</td>
                 <td>
                   {animal.sexo.charAt(0).toUpperCase() + animal.sexo.slice(1)}
                 </td>
-                <td>{animal.peso}</td>
+                <td>{`${animal.peso} Kg`}</td>
                 <td>
                   {animal.cor.charAt(0).toUpperCase() + animal.cor.slice(1)}
                 </td>
