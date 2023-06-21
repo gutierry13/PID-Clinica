@@ -89,7 +89,6 @@ export function ClientModal() {
     } else {
       changeSelectedClient('')
       setOpenModalWithUpdateButton(false)
-      // CloseModal()
       setClient({
         cpf: '',
         nome: '',

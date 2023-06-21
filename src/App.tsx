@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Router } from './routes/Router'
 import { AsideNav } from './pages/components/asideNav/asideNav'
 import { GlobalStyle } from './globalStyles'
+import { AlertBoxContextProvider } from './pages/components/alertBoxContext'
 // import { ModalProvider } from './pages/components/clientes/modalContext'
 // import { AnimalModalProvider } from './pages/components/animais/modalContext'
 
@@ -10,7 +11,9 @@ function App() {
     <BrowserRouter>
       <AsideNav />
       <GlobalStyle />
-      <Router />
+      <AlertBoxContextProvider>
+        <Router />
+      </AlertBoxContextProvider>
     </BrowserRouter>
   )
 }

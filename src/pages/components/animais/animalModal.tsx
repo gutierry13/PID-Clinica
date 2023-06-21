@@ -34,12 +34,12 @@ export function AnimalModal() {
     nome: '',
     idade: '',
     raca: '',
-    especie: '',
+    especie: 'cachorro',
     sexo: 'macho',
     peso: '',
     cor: '',
     porte: 'pequeno',
-    saude: '',
+    saude: 'Nenhum',
   })
   useEffect(() => {
     if (isModalOpen && selectedAnimal) {
@@ -62,17 +62,16 @@ export function AnimalModal() {
     } else {
       changeSelectedAnimal('')
       setOpenModalWithUpdateButton(false)
-      CloseModal()
       setAnimal({
         nome: '',
         idade: '',
         raca: '',
-        especie: '',
+        especie: 'cachorro',
         sexo: 'macho',
         peso: '',
         cor: '',
         porte: 'pequeno',
-        saude: '',
+        saude: 'Nenhum',
       })
     }
   }, [isModalOpen, selectedAnimal, animals, changeSelectedAnimal])
@@ -83,12 +82,12 @@ export function AnimalModal() {
       nome: '',
       idade: '',
       raca: '',
-      especie: '',
+      especie: 'cachorro',
       sexo: 'macho',
       peso: '',
       cor: '',
       porte: 'pequeno',
-      saude: '',
+      saude: 'Nenhum',
     })
     CloseModal()
   }
@@ -113,81 +112,94 @@ export function AnimalModal() {
             {openModalWithUpdateButton ? 'Editar Animal' : 'Cadastrar Animal'}
           </h1>
         </div>
-        <InputTemplate
-          id="nome"
-          name="Nome"
-          type="text"
-          value={animal.nome}
-          change={(e) => setAnimal({ ...animal, nome: e.target.value })}
-        />
-        <InputTemplate
-          id="raca"
-          name="Raça"
-          type="text"
-          value={animal.raca}
-          change={(e) => setAnimal({ ...animal, raca: e.target.value })}
-        />
-        <InputTemplate
-          id="especie"
-          name="Espécie"
-          type="text"
-          value={animal.especie}
-          change={(e) => setAnimal({ ...animal, especie: e.target.value })}
-        />
-        <InputTemplate
-          id="idade"
-          name="Idade"
-          type="text"
-          value={animal.idade}
-          change={(e) => setAnimal({ ...animal, idade: e.target.value })}
-        />
-        <SelectSexoTemplate
-          value1="Macho"
-          value2="Femea"
-          value={animal.sexo}
-          change={(e) => setAnimal({ ...animal, sexo: e.target.value })}
-        />
-        <InputTemplate
-          id="peso"
-          name="Peso"
-          type="text"
-          value={animal.peso}
-          change={(e) => setAnimal({ ...animal, peso: e.target.value })}
-        />
-        <InputTemplate
-          id="cor"
-          name="Cor"
-          type="text"
-          value={animal.cor}
-          change={(e) => setAnimal({ ...animal, cor: e.target.value })}
-        />
-        {/* <InputTemplate
-          id="porte"
-          name="Porte"
-          type="text"
-          value={animal.porte}
-          change={(e) => setAnimal({ ...animal, porte: e.target.value })}
-        /> */}
-        <div>
-          <label htmlFor="porte">Porte</label>
-          <select
-            name="porte"
-            id="porte"
-            value={animal.porte}
-            onChange={(e) => setAnimal({ ...animal, porte: e.target.value })}
-          >
-            <option value="pequeno">Pequeno</option>
-            <option value="medio">Médio</option>
-            <option value="grande">Grande</option>
-          </select>
-        </div>
-        <InputTemplate
-          id="hSaude"
-          name="Histórico de Saúde"
-          type="text"
-          value={animal.saude}
-          change={(e) => setAnimal({ ...animal, saude: e.target.value })}
-        />
+        <form>
+          <InputTemplate
+            id="nome"
+            name="Nome"
+            type="text"
+            value={animal.nome}
+            change={(e) => setAnimal({ ...animal, nome: e.target.value })}
+          />
+          <InputTemplate
+            id="raca"
+            name="Raça"
+            type="text"
+            value={animal.raca}
+            change={(e) => setAnimal({ ...animal, raca: e.target.value })}
+          />
+          <div>
+            <label htmlFor="especie">Espécie</label>
+            <select
+              name="especie"
+              id="especie"
+              value={animal.especie}
+              onChange={(e) =>
+                setAnimal({ ...animal, especie: e.target.value })
+              }
+            >
+              <option value="cachorro">Cachorro</option>
+              <option value="gato">Gato</option>
+            </select>
+          </div>
+          <InputTemplate
+            id="idade"
+            name="Idade (meses)"
+            type="number"
+            value={animal.idade}
+            change={(e) => setAnimal({ ...animal, idade: e.target.value })}
+          />
+          <SelectSexoTemplate
+            value1="Macho"
+            value2="Femea"
+            value={animal.sexo}
+            change={(e) =>
+              setAnimal({
+                ...animal,
+                sexo: e.target.value as 'macho' | 'femea',
+              })
+            }
+          />
+          <InputTemplate
+            id="peso"
+            name="Peso (K/g)"
+            type="number"
+            value={animal.peso}
+            change={(e) => setAnimal({ ...animal, peso: e.target.value })}
+          />
+          <InputTemplate
+            id="cor"
+            name="Cor"
+            type="text"
+            value={animal.cor}
+            change={(e) => setAnimal({ ...animal, cor: e.target.value })}
+          />
+
+          <div>
+            <label htmlFor="porte">Porte</label>
+            <select
+              name="porte"
+              id="porte"
+              value={animal.porte}
+              onChange={(e) =>
+                setAnimal({
+                  ...animal,
+                  porte: e.target.value as 'pequeno' | 'medio' | 'grande',
+                })
+              }
+            >
+              <option value="pequeno">Pequeno</option>
+              <option value="medio">Médio</option>
+              <option value="grande">Grande</option>
+            </select>
+          </div>
+          <InputTemplate
+            id="hSaude"
+            name="Histórico de Saúde"
+            type="text"
+            value={animal.saude}
+            change={(e) => setAnimal({ ...animal, saude: e.target.value })}
+          />
+        </form>
         {openModalWithUpdateButton ? (
           <EditButtonStyles onClick={handleUpdateAnimal}>
             Alterar

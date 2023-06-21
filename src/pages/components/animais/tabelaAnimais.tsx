@@ -24,7 +24,7 @@ export function TabelaAnimais() {
   }
 
   function handleDeleteAnimal(event: MouseEvent) {
-    if (window.confirm('Deletar Client') === true) {
+    if (window.confirm('Deletar Animal?') === true) {
       const animalCodValue = (
         (event.currentTarget as HTMLElement).parentElement?.parentElement
           ?.children[0] as HTMLElement
@@ -56,8 +56,8 @@ export function TabelaAnimais() {
           <tr>
             <th>Codigo</th>
             <th>Nome</th>
-            <th>Raça</th>
             <th>Espécie</th>
+            <th>Raça</th>
             <th>Idade</th>
             <th>Sexo</th>
             <th>Peso</th>
@@ -71,14 +71,27 @@ export function TabelaAnimais() {
             return (
               <tr key={String(animal.codigo)}>
                 <td>{animal.codigo}</td>
-                <td>{animal.nome}</td>
-                <td>{animal.raca}</td>
-                <td>{animal.especie}</td>
+                <td>
+                  {animal.nome.charAt(0).toUpperCase() + animal.nome.slice(1)}
+                </td>
+                <td>
+                  {animal.especie.charAt(0).toUpperCase() +
+                    animal.especie.slice(1)}
+                </td>
+                <td>
+                  {animal.raca.charAt(0).toUpperCase() + animal.raca.slice(1)}
+                </td>
                 <td>{animal.idade}</td>
-                <td>{animal.sexo}</td>
+                <td>
+                  {animal.sexo.charAt(0).toUpperCase() + animal.sexo.slice(1)}
+                </td>
                 <td>{animal.peso}</td>
-                <td>{animal.cor}</td>
-                <td>{animal.porte}</td>
+                <td>
+                  {animal.cor.charAt(0).toUpperCase() + animal.cor.slice(1)}
+                </td>
+                <td>
+                  {animal.porte.charAt(0).toUpperCase() + animal.porte.slice(1)}
+                </td>
                 <td>{animal.saude}</td>
                 <td>
                   <AiOutlineEdit

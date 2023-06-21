@@ -26,12 +26,7 @@ export function Animais() {
         <CustomerContainer>
           <div className="text">
             <h1>Animais</h1>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et
-              dolore cumque quos voluptate animi, suscipit voluptatem nisi
-              officia, consectetur fuga voluptates alias minus natus veritatis,
-              cum ab inventore nemo voluptas?
-            </p>
+            <p>Tela de gerenciamento e cadastro de Animais</p>
           </div>
           <AddButtonStyles onClick={handleOpenNewAnimalModal}>
             Cadastrar Animal

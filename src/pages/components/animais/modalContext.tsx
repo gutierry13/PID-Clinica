@@ -8,14 +8,14 @@ interface ModalContextType {
   CloseModal: () => void
   isModalOpen: boolean
   selectedAnimal: {}
-  changeSelectedAnimal: (cliente: string) => void
+  changeSelectedAnimal: (animal: string) => void
 }
 export const ModalContext = createContext({} as ModalContextType)
 export function AnimalModalProvider({ children }: ModalProviderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedAnimal, setSelectedAnimal] = useState('')
-  function changeSelectedAnimal(client: string) {
-    setSelectedAnimal(client)
+  function changeSelectedAnimal(animal: string) {
+    setSelectedAnimal(animal)
   }
   function OpenModal() {
     setIsModalOpen(true)

@@ -2,10 +2,12 @@ import {
   ReactNode,
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from 'react'
 import { api } from '../../../services/api'
+import { AlertBoxContext } from '../alertBoxContext'
 interface ClientsTypes {
   cpf: string
   nome: string
@@ -26,22 +28,12 @@ interface ClientsContextData {
   updateClient: (client: ClientsTypes) => Promise<void>
   deleteClient: (clientCpf: String) => Promise<void>
   searchClient: (clientCpf: String) => Promise<void>
-  setAlertMessageBoxInfo: (alertMessageBoxInfo: any) => void
-  alertMessageBoxInfo: {
-    visible: boolean
-    alertType: string
-    content: string
-  }
 }
 export const ClientContext = createContext<ClientsContextData>(
   {} as ClientsContextData,
 )
 export function ClientProvider({ children }: ClientProviderProps) {
-  const [alertMessageBoxInfo, setAlertMessageBoxInfo] = useState({
-    visible: false,
-    alertType: '',
-    content: '',
-  })
+  const { setAlertMessageBoxInfo } = useContext(AlertBoxContext)
   const [clients, setClients] = useState<ClientsTypes[]>([])
   function getClients() {
     api.get('/clientes').then((response) => setClients(response.data))
@@ -160,8 +152,6 @@ export function ClientProvider({ children }: ClientProviderProps) {
         updateClient,
         deleteClient,
         searchClient,
-        alertMessageBoxInfo,
-        setAlertMessageBoxInfo,
       }}
     >
       {children}

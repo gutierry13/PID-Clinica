@@ -2,10 +2,12 @@ import {
   ReactNode,
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from 'react'
 import { api } from '../../../services/api'
+import { AlertBoxContext } from '../alertBoxContext'
 
 interface Animal {
   codigo?: String
@@ -28,23 +30,13 @@ interface AnimalContextData {
   updateAnimal: (animal: Animal) => Promise<void>
   deleteAnimal: (animalCod: String) => Promise<void>
   searchAnimal: (animalCod: String) => Promise<void>
-  setAlertMessageBoxInfo: (alertMessageBoxInfo: any) => void
-  alertMessageBoxInfo: {
-    visible: boolean
-    alertType: string
-    content: string
-  }
 }
 export const AnimalContext = createContext<AnimalContextData>(
   {} as AnimalContextData,
 )
 export function AnimalProvider({ children }: AnimalProviderProps) {
+  const { setAlertMessageBoxInfo } = useContext(AlertBoxContext)
   const [animals, setAnimals] = useState<Animal[]>([])
-  const [alertMessageBoxInfo, setAlertMessageBoxInfo] = useState({
-    visible: false,
-    alertType: '',
-    content: '',
-  })
   const getAnimals = useCallback(async () => {
     await api.get('animais').then((response) => setAnimals(response.data))
   }, [])
@@ -62,6 +54,7 @@ export function AnimalProvider({ children }: AnimalProviderProps) {
   const createAnimal = useCallback(
     async (animalInput: Animal) => {
       try {
+        console.log(animalInput)
         const response = await api.post('/animais', animalInput)
         const { data } = response.config
         setAlertMessageBoxInfo({
@@ -159,8 +152,6 @@ export function AnimalProvider({ children }: AnimalProviderProps) {
         updateAnimal,
         deleteAnimal,
         searchAnimal,
-        setAlertMessageBoxInfo,
-        alertMessageBoxInfo,
       }}
     >
       {children}

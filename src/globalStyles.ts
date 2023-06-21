@@ -105,17 +105,26 @@ export const ContainerTable = styled.div`
   max-width: 1150px;
   table {
     display: block;
+    padding-right: 1.2rem;
     overflow: auto;
     width: 100%;
     border-spacing: 0 0.5rem;
+    font-size: 94%;
     th {
       font-weight: 400;
-      padding: 0.5rem 1rem;
-      text-align: left;
       line-height: 1.5rem;
+      /* padding: 0.6rem 2.2rem;
+      text-align: left; */
+      padding: 0.6rem 4.2rem;
+      text-align: center;
     }
     td {
-      padding: 0.5rem 1rem;
+      /* padding: 0.5rem 1.8rem;
+      border: 0;
+      background: #fff;
+      font-weight: 400; */
+      padding: 1.2rem 2rem;
+      text-align: center;
       border: 0;
       background: #fff;
       font-weight: 400;
@@ -129,6 +138,7 @@ export const ContainerModalForm = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  gap: 2rem;
   form {
     display: flex;
     justify-content: space-around;
