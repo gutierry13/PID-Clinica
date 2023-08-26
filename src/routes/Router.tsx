@@ -5,6 +5,7 @@ import { Consultas } from '../pages/components/consultas/consultas'
 import { Clients } from '../pages/components/clientes/clients'
 import { ModalProvider } from '../pages/components/clientes/modalContext'
 import { AnimalModalProvider } from '../pages/components/animais/modalContext'
+import Adocoes from '../pages/components/adocoes/adocoes'
 
 export function Router() {
   const location = useLocation()
@@ -16,6 +17,7 @@ export function Router() {
           <Route path="/clientes" element={<Clients />} />
           <Route path="/funcionarios" element={<Funcionarios />} />
           <Route path="/consultas" element={<Consultas />} />
+          <Route path="/adocoes" element={<Adocoes />} />
         </Routes>
       </AnimalModalProvider>
     </ModalProvider>
