@@ -2,11 +2,14 @@
   "name": "pid",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://gutierry13.github.io/PID-Clinica",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+       "predeploy": "npm run build",
+   "deploy": "gh-pages -d build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -32,6 +35,8 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "gh-pages": "^6.0.0",
+    "http-proxy-middleware": "^2.0.6",
     "miragejs": "^0.1.47",
     "typescript": "^5.0.2",
     "vite": "^4.3.2"

@@ -15,6 +15,7 @@ export function Animais() {
   function handleOpenNewAnimalModal() {
     OpenModal()
   }
+
   return (
     <AnimalProvider>
       <motion.div

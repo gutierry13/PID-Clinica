@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { api } from '../../../services/api'
 import { AlertBoxContext } from '../alertBoxContext'
+import axios from 'axios'
 
 interface Animal {
   codigo?: String
@@ -38,8 +39,21 @@ export function AnimalProvider({ children }: AnimalProviderProps) {
   const { setAlertMessageBoxInfo } = useContext(AlertBoxContext)
   const [animals, setAnimals] = useState<Animal[]>([])
   const getAnimals = useCallback(async () => {
-    await api.get('animais').then((response) => setAnimals(response.data))
+    await axios
+      .get('https://129.146.68.51/aluno3-pfsii/animais')
+      .then((response) => setAnimals(response.data))
   }, [])
+  // useEffect(() => {
+  //   fetch('https://129.146.68.51/aluno3-pfsii/animais', {
+  //     method: 'GET',
+  //   })
+  //     .then((response) => {
+  //       return response.json()
+  //     })
+  //     .then((data) => {
+  //       console.log(data)
+  //     })
+  // })
   useEffect(() => {
     getAnimals()
   }, [getAnimals])
