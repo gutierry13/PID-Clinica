@@ -9,6 +9,7 @@ interface InputProps {
   disabled?: boolean
   validated?: boolean
   required?: boolean
+  list?: string
   title?: string
 }
 interface SelectProps {

@@ -1,8 +1,8 @@
 {
+  "homepage": "https://gutierry13.github.io/PID-Clinica",
   "name": "pid",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://gutierry13.github.io/PID-Clinica",
   "type": "module",
   "scripts": {
     "dev": "vite",

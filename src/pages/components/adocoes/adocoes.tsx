@@ -1,25 +1,22 @@
 import { motion } from 'framer-motion'
 import { CustomerContainer } from '../../../globalStyles'
-// import { TabelaAnimais } from './tabelaAnimais'
-// import { AnimalProvider } from './animalContext'
 import { AddButtonStyles } from '../styles'
-import { useContextSelector } from 'use-context-selector'
-// import { ModalContext } from './modalContext'
-// import { AnimalModal } from './animalModal'
 import { AlertMessageBox } from '../alertMessageBox'
-import { AnimalProvider } from '../animais/animalContext'
-import { AnimalModal } from '../animais/animalModal'
-import { ModalContext } from '../animais/modalContext'
-import { TabelaAnimais } from '../animais/tabelaAnimais'
+import { AdocaoModal } from './adocoesModal'
+import { TabelaAdocoes } from './tabelaAdocoes'
+import { AdocaoProvider } from './adocoesContext'
+import { ModalContext } from './modalContext'
+import { useContextSelector } from 'use-context-selector'
+
 export default function Adocoes() {
   const OpenModal = useContextSelector(ModalContext, (context) => {
     return context.OpenModal
   })
-  function handleOpenNewAnimalModal() {
+  function handleOpenNewAdocaoModal() {
     OpenModal()
   }
   return (
-    <AnimalProvider>
+    <AdocaoProvider>
       <motion.div
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -31,14 +28,14 @@ export default function Adocoes() {
             <h1>Adoções</h1>
             <p>Tela de gerenciamento de adoçoes</p>
           </div>
-          <AddButtonStyles onClick={handleOpenNewAnimalModal}>
+          <AddButtonStyles onClick={handleOpenNewAdocaoModal}>
             Registrar Adoção
           </AddButtonStyles>
-          <AnimalModal />
+          <AdocaoModal />
           <AlertMessageBox />
-          <TabelaAnimais />
+          <TabelaAdocoes />
         </CustomerContainer>
       </motion.div>
-    </AnimalProvider>
+    </AdocaoProvider>
   )
 }
