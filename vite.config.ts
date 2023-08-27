@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: '/PID-Clinica/',
   build: {
-    outDir: 'dist',
+    outDir: 'build',
   },
 })
