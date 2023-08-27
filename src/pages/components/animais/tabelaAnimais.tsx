@@ -76,7 +76,7 @@ export function TabelaAnimais() {
                 meses === 12 ? 'ano' : 'anos'
               } e ${meses % 12} meses`
             }
-            const idadeCalculada = calcIdade(animal.idade)
+            const idadeCalculada = calcIdade(Number(animal.idade))
             return (
               <tr key={String(animal.codigo)}>
                 <td>{animal.codigo}</td>
