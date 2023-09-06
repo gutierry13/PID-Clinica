@@ -16,7 +16,7 @@ interface Adocao {
   data: string
   status?: string
   termos: string
-  documentos?: Blob | null
+  documentos?: string | null
 }
 interface AdocaoProviderProps {
   children: ReactNode

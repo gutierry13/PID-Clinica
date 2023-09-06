@@ -4,7 +4,7 @@ interface InputProps {
   name: string
   type: string
   id: string
-  value: string | number
+  value?: string | number
   change: (e: ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
   validated?: boolean

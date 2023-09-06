@@ -12,12 +12,12 @@ interface Adocao {
   cpfCliente: string
   codigoAnimal: string
   data: string
-  status?: string
-  termos: string
-  documentos?: Blob | null
+  status?: string | 'aprovado' | 'recusado'
+  termos: string | 'Sem termos'
+  documentos?: string | null
 }
 interface Animal {
-  codigo?: String
+  codigo?: string
   nome: string
   idade: string
   raca: string
@@ -178,7 +178,7 @@ export function AdocaoModal() {
             id="status"
             name="status"
             type="text"
-            value={adocao.status}
+            value={adocao.status || 'Sem termos'}
             change={(e) => setAdocao({ ...adocao, status: e.target.value })}
           />
           <InputTemplate
@@ -189,10 +189,10 @@ export function AdocaoModal() {
             change={(e) => setAdocao({ ...adocao, termos: e.target.value })}
           />
           <InputTemplate
-            id="documentoss"
-            name="documentoss"
+            id="documentos"
+            name="documentos"
             type="file"
-            value={adocao.documentos}
+            value={adocao.documentos || 'Sem documentos'}
             change={(e) => setAdocao({ ...adocao, documentos: e.target.value })}
           />
         </form>
