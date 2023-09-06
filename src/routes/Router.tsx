@@ -16,11 +16,14 @@ export function Router() {
       <AnimalModalProvider>
         <AdocaoModalProvider>
           <Routes key={location.pathname} location={location}>
-            <Route path="/animais" element={<Animais />} />
-            <Route path="/clientes" element={<Clients />} />
-            <Route path="/funcionarios" element={<Funcionarios />} />
-            <Route path="/consultas" element={<Consultas />} />
-            <Route path="/adocoes" element={<Adocoes />} />
+            <Route path="/PID-Clinica/animais" element={<Animais />} />
+            <Route path="/PID-Clinica/clientes" element={<Clients />} />
+            <Route
+              path="/PID-Clinica/funcionarios"
+              element={<Funcionarios />}
+            />
+            <Route path="/PID-Clinica/consultas" element={<Consultas />} />
+            <Route path="/PID-Clinica/adocoes" element={<Adocoes />} />
           </Routes>
         </AdocaoModalProvider>
       </AnimalModalProvider>

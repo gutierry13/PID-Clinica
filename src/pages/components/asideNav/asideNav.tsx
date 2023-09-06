@@ -25,31 +25,31 @@ export function AsideNav() {
           <img src={Logo} alt="Logo pata de cachorro" />
         </div>
         <div className="links">
-          <Link to="/animais">
+          <Link to="/PID-Clinica/animais">
             <FaDog />
             Animais
           </Link>
-          <Link to="/funcionarios">
+          <Link to="/PID-Clinica/funcionarios">
             <GiHealthNormal />
             funcionarios
           </Link>
-          <Link to="/consultas">
+          <Link to="/PID-Clinica/consultas">
             <FaCalendarAlt />
             consultas
           </Link>
-          <Link to="/clientes">
+          <Link to="/PID-Clinica/clientes">
             <FaUser />
             clientes
           </Link>
-          <Link to="/adocoes">
+          <Link to="/PID-Clinica/adocoes">
             <BiBone />
             Adoções
           </Link>
-          <Link to="/infoadocoes">
+          <Link to="/PID-Clinica/infoadocoes">
             <FaInfoCircle />
             Info-Adoções
           </Link>
-          <Link to="/social">
+          <Link to="/PID-Clinica/social">
             <FaFacebookF />
             Social
           </Link>
