@@ -14,7 +14,10 @@ interface Animal {
   nome: string
   idade: string
   raca: string
-  especie: string
+  especie: {
+    nome: string
+    codigo?: string
+  }
   sexo: 'macho' | 'femea'
   peso: string
   cor: string

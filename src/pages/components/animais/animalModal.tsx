@@ -1,21 +1,31 @@
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
 import { FormEvent, useState, useContext, useEffect } from 'react'
 import Modal from 'react-modal'
+import Combobox from 'react-widgets/Combobox'
 import { useContextSelector } from 'use-context-selector'
 import { ModalContext } from './modalContext'
 import { ContainerModalForm } from '../../../globalStyles'
 import { AddButtonStyles, EditButtonStyles } from '../styles'
 import { AnimalContext } from './animalContext'
+import { api } from '../../../services/api'
 interface Animal {
+  codigo?: String
   nome: string
   idade: string
   raca: string
-  especie: string
+  especie: {
+    nome: string
+    codigo?: string
+  }
   sexo: 'macho' | 'femea'
   peso: string
   cor: string
   porte: 'pequeno' | 'medio' | 'grande'
   saude: string
+}
+interface Especie {
+  codigo: string
+  nome: string
 }
 export function AnimalModal() {
   const { isModalOpen, CloseModal, selectedAnimal, changeSelectedAnimal } =
@@ -34,13 +44,22 @@ export function AnimalModal() {
     nome: '',
     idade: '',
     raca: '',
-    especie: 'cachorro',
+    especie: {
+      nome: '',
+    },
     sexo: 'macho',
     peso: '',
     cor: '',
     porte: 'pequeno',
     saude: 'Nenhum',
   })
+  const [especie, setEspecie] = useState([] as Especie[])
+  function getAllSpecies() {
+    api.get('/especie').then((response) => setEspecie(response.data))
+  }
+  useEffect(() => {
+    getAllSpecies()
+  }, [])
   useEffect(() => {
     if (isModalOpen && selectedAnimal) {
       setOpenModalWithUpdateButton(true)
@@ -66,7 +85,10 @@ export function AnimalModal() {
         nome: '',
         idade: '',
         raca: '',
-        especie: 'cachorro',
+        especie: {
+          codigo: '',
+          nome: '',
+        },
         sexo: 'macho',
         peso: '',
         cor: '',
@@ -82,7 +104,10 @@ export function AnimalModal() {
       nome: '',
       idade: '',
       raca: '',
-      especie: 'cachorro',
+      especie: {
+        codigo: '',
+        nome: '',
+      },
       sexo: 'macho',
       peso: '',
       cor: '',
@@ -90,6 +115,17 @@ export function AnimalModal() {
       saude: 'Nenhum',
     })
     CloseModal()
+  }
+
+  function handleAddNewSpecie() {
+    const newSpecie = window.prompt('Adicione uma nova espécie')
+    if (newSpecie) {
+      api
+        .post('/especie', {
+          nome: newSpecie,
+        })
+        .then(getAllSpecies())
+    }
   }
   async function handleUpdateAnimal(event: FormEvent) {
     event.preventDefault()
@@ -99,6 +135,7 @@ export function AnimalModal() {
     })
     CloseModal()
   }
+  console.log(animal)
   return (
     <Modal
       isOpen={isModalOpen}
@@ -129,17 +166,33 @@ export function AnimalModal() {
           />
           <div>
             <label htmlFor="especie">Espécie</label>
-            <select
+            <span onClick={handleAddNewSpecie}> + </span>
+            <Combobox
+              id="especie"
+              name="especie"
+              value={animal.especie.nome}
+              defaultValue=""
+              onSelect={(value) =>
+                setAnimal({
+                  ...animal,
+                  especie: {
+                    nome: value,
+                    codigo: especie.filter((item) => item.nome === value)[0]
+                      .codigo,
+                  },
+                })
+              }
+              data={especie.map((item) => item.nome)}
+            />
+            {/* <select
               name="especie"
               id="especie"
-              value={animal.especie}
-              onChange={(e) =>
-                setAnimal({ ...animal, especie: e.target.value })
-              }
+              value={animal.especie.nome}
+              onChange={(e) => setAnimal({ ...animal, especie: e.target.value })}
             >
               <option value="cachorro">Cachorro</option>
               <option value="gato">Gato</option>
-            </select>
+            </select> */}
           </div>
           <InputTemplate
             id="idade"

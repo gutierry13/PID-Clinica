@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "predeploy": "npm run build",
-   "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "react-icons": "^4.8.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.11.2",
+    "react-widgets": "^5.8.4",
     "scheduler": "^0.23.0",
     "styled-components": "^6.0.0-rc.1",
     "use-context-selector": "^1.4.1"

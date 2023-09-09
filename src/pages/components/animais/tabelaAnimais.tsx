@@ -56,7 +56,8 @@ export function TabelaAnimais() {
           <tr>
             <th>Codigo</th>
             <th>Nome</th>
-            <th>Espécie</th>
+            <th>Espécie nome</th>
+            <th>Espécie codigo</th>
             <th>Raça</th>
             <th>Idade</th>
             <th>Sexo</th>
@@ -84,9 +85,10 @@ export function TabelaAnimais() {
                   {animal.nome.charAt(0).toUpperCase() + animal.nome.slice(1)}
                 </td>
                 <td>
-                  {animal.especie.charAt(0).toUpperCase() +
-                    animal.especie.slice(1)}
+                  {animal.especie.nome.charAt(0).toUpperCase() +
+                    animal.especie.nome.slice(1)}
                 </td>
+                <td>{animal.especie.codigo}</td>
                 <td>
                   {animal.raca.charAt(0).toUpperCase() + animal.raca.slice(1)}
                 </td>

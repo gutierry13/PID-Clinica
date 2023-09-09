@@ -29,6 +29,7 @@ export function Animais() {
             <h1>Animais</h1>
             <p>Tela de gerenciamento e cadastro de Animais</p>
           </div>
+
           <AddButtonStyles onClick={handleOpenNewAnimalModal}>
             Cadastrar Animal
           </AddButtonStyles>
