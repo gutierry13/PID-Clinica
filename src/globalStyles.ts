@@ -176,4 +176,8 @@ export const ContainerModalForm = styled.div`
     align-items: center;
     justify-content: center;
   }
+  input[name='especie'],
+  input[class='rw-dropdownlist-search'] {
+    border: none !important;
+  }
 `

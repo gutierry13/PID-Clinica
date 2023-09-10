@@ -1,7 +1,7 @@
 import { InputTemplate, SelectSexoTemplate } from '../simpleInputTemplate'
 import { FormEvent, useState, useContext, useEffect } from 'react'
 import Modal from 'react-modal'
-import Combobox from 'react-widgets/Combobox'
+import DropdownList from 'react-widgets/DropdownList'
 import { useContextSelector } from 'use-context-selector'
 import { ModalContext } from './modalContext'
 import { ContainerModalForm } from '../../../globalStyles'
@@ -59,7 +59,7 @@ export function AnimalModal() {
   }
   useEffect(() => {
     getAllSpecies()
-  }, [])
+  }, [animal.especie])
   useEffect(() => {
     if (isModalOpen && selectedAnimal) {
       setOpenModalWithUpdateButton(true)
@@ -124,7 +124,30 @@ export function AnimalModal() {
         .post('/especie', {
           nome: newSpecie,
         })
-        .then(getAllSpecies())
+        .then((response) => {
+          console.log(response)
+          getAllSpecies()
+        })
+    }
+  }
+  function handleDeleteSpecie() {
+    const askForDelete = window.confirm(
+      'Tem certeza que deseja excluir a especie selecionada?',
+    )
+    if (askForDelete) {
+      api
+        .delete(`/especie`, { data: { codigo: animal.especie.codigo } })
+        .then((response) => {
+          console.log(response)
+          getAllSpecies()
+        })
+      setAnimal({
+        ...animal,
+        especie: {
+          codigo: '',
+          nome: '',
+        },
+      })
     }
   }
   async function handleUpdateAnimal(event: FormEvent) {
@@ -166,8 +189,21 @@ export function AnimalModal() {
           />
           <div>
             <label htmlFor="especie">Espécie</label>
-            <span onClick={handleAddNewSpecie}> + </span>
-            <Combobox
+            <span
+              onClick={handleAddNewSpecie}
+              style={{ cursor: 'pointer', color: 'green' }}
+            >
+              {' '}
+              +{' '}
+            </span>
+            <span
+              onClick={handleDeleteSpecie}
+              style={{ cursor: 'pointer', color: 'red' }}
+            >
+              {' '}
+              -{' '}
+            </span>
+            <DropdownList
               id="especie"
               name="especie"
               value={animal.especie.nome}
