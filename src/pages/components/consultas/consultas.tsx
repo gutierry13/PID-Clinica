@@ -3,16 +3,17 @@ import { CustomerContainer } from '../../../globalStyles'
 import { TabelaConsultas } from './tabelaConsultas'
 import { ConsultaModal } from './consultaModal'
 import { ConsultaProvider } from './consultaContext'
-import { useState } from 'react'
 import { AddButtonStyles } from '../styles'
+import { useContextSelector } from 'use-context-selector'
+import { ModalContext } from './modalContext'
+import { AlertMessageBox } from '../alertMessageBox'
 
 export function Consultas() {
-  const [newClienteModalOpen, setNewClienteModalOpen] = useState(false)
-  function handleOpenNewClienteModal() {
-    setNewClienteModalOpen(true)
-  }
-  function handleCloseNewClienteModal() {
-    setNewClienteModalOpen(false)
+  const OpenModal = useContextSelector(ModalContext, (context) => {
+    return context.OpenModal
+  })
+  function handleOpenNewConsultaModal() {
+    OpenModal()
   }
   return (
     <ConsultaProvider>
@@ -32,14 +33,11 @@ export function Consultas() {
               maiores sequi commodi!
             </p>
           </div>
-          <AddButtonStyles onClick={handleOpenNewClienteModal}>
-            Abrir modal
+          <AddButtonStyles onClick={handleOpenNewConsultaModal}>
+            Cadastrar Consulta
           </AddButtonStyles>
-          <ConsultaModal
-            open={newClienteModalOpen}
-            close={handleCloseNewClienteModal}
-          />
-
+          <ConsultaModal />
+          <AlertMessageBox />
           <TabelaConsultas />
         </CustomerContainer>
       </motion.div>

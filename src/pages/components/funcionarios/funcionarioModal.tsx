@@ -5,7 +5,7 @@ import Modal from 'react-modal'
 interface Funcionario {
   cpf: string
   nome: string
-  dtNasc: Date | string
+  dataNascimento: Date | string
   funcao: string
   setor: string
   email: string

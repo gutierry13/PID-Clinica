@@ -188,13 +188,13 @@ export function AdocaoModal() {
             value={adocao.termos}
             change={(e) => setAdocao({ ...adocao, termos: e.target.value })}
           />
-          <InputTemplate
+          {/* <InputTemplate
             id="documentos"
             name="documentos"
             type="file"
             value={adocao.documentos || 'Sem documentos'}
             change={(e) => setAdocao({ ...adocao, documentos: e.target.value })}
-          />
+          /> */}
         </form>
         {openModalWithUpdateButton ? (
           <EditButtonStyles onClick={handleUpdateAdocao}>

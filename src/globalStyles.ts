@@ -181,3 +181,52 @@ export const ContainerModalForm = styled.div`
     border: none !important;
   }
 `
+export const ConsultaModalStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 550px;
+    gap: 1.2rem;
+  }
+  div input[type='text'],
+  div input[type='date'] {
+    width: 16rem;
+  }
+  input,
+  select {
+    display: block;
+    font-weight: 400;
+    line-height: 1.2;
+    height: 2.2rem;
+    border-radius: 6px;
+    border: 1px solid #000;
+    outline: none;
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+  label {
+    font-weight: 400;
+    line-height: 1.5;
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+  .buttons {
+    margin-top: 1.6rem;
+    display: flex;
+    gap: 1rem;
+    width: 6rem;
+    align-items: center;
+    justify-content: center;
+  }
+  input[name='especie'],
+  input[class='rw-dropdownlist-search'] {
+    border: none !important;
+  }
+`

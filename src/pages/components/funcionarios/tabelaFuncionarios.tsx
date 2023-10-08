@@ -3,8 +3,7 @@ import { ContainerTable } from '../../../globalStyles'
 import { FuncionarioContext } from './funcionarioContext'
 
 export function TabelaFuncionarios() {
-  const funcionarios = useContext(FuncionarioContext)
-  console.log(funcionarios)
+  const { funcionarios } = useContext(FuncionarioContext)
   return (
     <ContainerTable>
       <table>
@@ -27,14 +26,15 @@ export function TabelaFuncionarios() {
         <tbody>
           {funcionarios.map((funcionario) => {
             return (
-              <tr>
+              <tr key={funcionario.cpf}>
                 <td>{funcionario.cpf}</td>
                 <td>{funcionario.nome}</td>
-                <td>
+                {/* <td>
                   {Intl.DateTimeFormat('pt-BR').format(
                     new Date(funcionario.dtNasc),
                   )}
-                </td>
+                </td> */}
+                <td>{funcionario.dataNascimento}</td>
                 <td>{funcionario.funcao}</td>
                 <td>{funcionario.setor}</td>
                 <td>{funcionario.email}</td>
@@ -42,11 +42,12 @@ export function TabelaFuncionarios() {
                 <td>{funcionario.ocupacao}</td>
                 <td>{funcionario.estadoCivil}</td>
                 <td>{funcionario.cep}</td>
-                <td>
+                {/* <td>
                   {Intl.DateTimeFormat('pt-BR').format(
                     new Date(funcionario.dtContratacao),
                   )}
-                </td>
+                </td> */}
+                <td>{funcionario.dataContratacao}</td>
                 <td>{funcionario.sexo}</td>
               </tr>
             )
