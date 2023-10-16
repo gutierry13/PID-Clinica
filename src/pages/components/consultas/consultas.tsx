@@ -7,6 +7,7 @@ import { AddButtonStyles } from '../styles'
 import { useContextSelector } from 'use-context-selector'
 import { ModalContext } from './modalContext'
 import { AlertMessageBox } from '../alertMessageBox'
+import ConsultaCard from './consultaCard'
 
 export function Consultas() {
   const OpenModal = useContextSelector(ModalContext, (context) => {
@@ -36,6 +37,7 @@ export function Consultas() {
           <AddButtonStyles onClick={handleOpenNewConsultaModal}>
             Cadastrar Consulta
           </AddButtonStyles>
+          <ConsultaCard />
           <ConsultaModal />
           <AlertMessageBox />
           <TabelaConsultas />

@@ -3,11 +3,11 @@ import {
   useEffect,
   useState,
   ReactNode,
-  useCallback,
-  useContext,
+  // useCallback,
+  // useContext,
 } from 'react'
 import { api } from '../../../services/api'
-import { AlertBoxContext } from '../alertBoxContext'
+// import { AlertBoxContext } from '../alertBoxContext'
 interface Funcionario {
   cpf: string
   nome: string

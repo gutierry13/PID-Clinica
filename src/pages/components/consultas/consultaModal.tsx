@@ -1,7 +1,7 @@
 import { InputTemplate } from '../simpleInputTemplate'
 import { FormEvent, useEffect, useState, useContext } from 'react'
 import Modal from 'react-modal'
-import { DropdownList } from 'react-widgets/cjs'
+import { DropdownList, Multiselect } from 'react-widgets/cjs'
 import { api } from '../../../services/api'
 import { useContextSelector } from 'use-context-selector'
 import { ConsultaContext } from './consultaContext'
@@ -12,14 +12,8 @@ import { AddButtonStyles } from '../styles'
 interface Consulta {
   codigo?: string
   animalID: string
-  clienteCPF: string | {}
-  funcionarioCPF:
-    | string
-    | [
-        {
-          cpf: string
-        },
-      ]
+  clienteCPF: string | { cpf: string }
+  funcionarioCPF: string | []
   data: string | Date
   motivo: string
   diagnostico: string
@@ -82,7 +76,7 @@ export function ConsultaModal() {
   const [consulta, setConsulta] = useState<Consulta>({
     animalID: '',
     clienteCPF: '',
-    funcionarioCPF: '',
+    funcionarioCPF: [],
     data: new Date(),
     motivo: '',
     diagnostico: '',
@@ -90,6 +84,7 @@ export function ConsultaModal() {
     tratamento: '',
     observacao: '',
   })
+  console.log(consulta)
   const [animal, setAnimal] = useState([{} as Animal])
   const [cliente, setCliente] = useState([{} as ClientsTypes])
   const [funcionario, setFuncionario] = useState([{} as Funcionario])
@@ -100,7 +95,7 @@ export function ConsultaModal() {
     setConsulta({
       animalID: '',
       clienteCPF: '',
-      funcionarioCPF: '',
+      funcionarioCPF: [],
       data: new Date(),
       motivo: '',
       diagnostico: '',
@@ -169,15 +164,15 @@ export function ConsultaModal() {
           />
           <label htmlFor="funcionarioCPF">CPF do Funcionário</label>
 
-          <DropdownList
+          <Multiselect
             id="funcionarioCPF"
             name="funcionarioCPF"
             value={consulta.funcionarioCPF}
-            defaultValue=""
-            onSelect={(value) =>
+            onChange={(value) =>
               setConsulta({
                 ...consulta,
-                funcionarioCPF: value.split('|')[0].trim(),
+                funcionarioCPF: value,
+                //
               })
             }
             data={funcionario.map((item) => `${item.cpf} | ${item.nome}`)}

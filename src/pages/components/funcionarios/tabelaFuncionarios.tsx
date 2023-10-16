@@ -34,7 +34,7 @@ export function TabelaFuncionarios() {
                     new Date(funcionario.dtNasc),
                   )}
                 </td> */}
-                <td>{funcionario.dataNascimento}</td>
+                <td>{String(funcionario.dataNascimento)}</td>
                 <td>{funcionario.funcao}</td>
                 <td>{funcionario.setor}</td>
                 <td>{funcionario.email}</td>
@@ -47,7 +47,7 @@ export function TabelaFuncionarios() {
                     new Date(funcionario.dtContratacao),
                   )}
                 </td> */}
-                <td>{funcionario.dataContratacao}</td>
+                <td>{String(funcionario.dataContratacao)}</td>
                 <td>{funcionario.sexo}</td>
               </tr>
             )

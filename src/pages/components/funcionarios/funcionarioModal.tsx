@@ -13,7 +13,7 @@ interface Funcionario {
   ocupacao: string
   estadoCivil: string
   cep: number
-  dtContratacao: Date | string
+  dataContratacao: Date | string
   sexo: string
 }
 interface ClienteModalProps {
@@ -27,7 +27,7 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
   const [funcionario, setFuncionario] = useState<Funcionario>({
     cpf: '',
     nome: '',
-    dtNasc: new Date(),
+    dataNascimento: new Date(),
     funcao: '',
     setor: '',
     email: '',
@@ -35,7 +35,7 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
     ocupacao: '',
     estadoCivil: '',
     cep: 0,
-    dtContratacao: new Date(),
+    dataContratacao: new Date(),
     sexo: 'Masculino',
   })
   console.log(funcionario)
@@ -70,11 +70,11 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
           id="dtnasc"
           name="Data de Nascimento"
           type="date"
-          value={funcionario.dtNasc.toString()}
+          value={funcionario.dataNascimento.toString()}
           change={(e) =>
             setFuncionario({
               ...funcionario,
-              dtNasc: e.target.value,
+              dataNascimento: e.target.value,
             })
           }
         />
@@ -145,11 +145,11 @@ export function FuncionarioModal({ open, close }: ClienteModalProps) {
           id="dtContratacao"
           name="Data de Contratação"
           type="date"
-          value={funcionario.dtContratacao.toString()}
+          value={funcionario.dataContratacao.toString()}
           change={(e) =>
             setFuncionario({
               ...funcionario,
-              dtContratacao: e.target.value,
+              dataContratacao: e.target.value,
             })
           }
         />
