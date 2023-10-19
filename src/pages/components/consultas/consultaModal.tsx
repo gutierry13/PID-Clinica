@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { InputTemplate } from '../simpleInputTemplate'
 import { FormEvent, useEffect, useState, useContext } from 'react'
 import Modal from 'react-modal'

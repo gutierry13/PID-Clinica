@@ -1,9 +1,5 @@
 // @ts-nocheck
-import {
-  CardContainer,
-  ContainerForCards,
-  ContainerTable,
-} from '../../../globalStyles'
+import { CardContainer, ContainerForCards } from '../../../globalStyles'
 import { ChangeEvent, useContext, useState } from 'react'
 // import { ConsultaModal } from './ConsultaModal'
 // import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
@@ -23,7 +19,7 @@ export function TabelaConsultas() {
   // const changeSelectedConsulta = useContextSelector(ModalContext, (context) => {
   //   return context.changeSelectedConsulta
   // })
-  const [consultaCpfInputSearch, setConsultaCpfInputSearch] = useState('')
+  const [consultaCodeInputSearch, setConsultaCodeInputSearch] = useState('')
   const { consultas, searchConsulta } = useContext(ConsultaContext)
   // console.log(consultas)
   // function handlePreencherValores(event: MouseEvent) {
@@ -45,20 +41,30 @@ export function TabelaConsultas() {
   //   }
   // }
 
-  // function handleSearchConsultaForCPF(event: ChangeEvent<HTMLInputElement>) {
-  //   if (event.target.value.length >= 0) {
-  //     setConsultaCpfInputSearch(event.target.value)
-  //     searchConsulta(event.target.value)
-  //   } else {
-  //     setConsultaCpfInputSearch('')
-  //   }
-  // }
+  function handleSearchConsultaForCode(event: ChangeEvent<HTMLInputElement>) {
+    if (event.target.value.length >= 0) {
+      setConsultaCodeInputSearch(event.target.value)
+      searchConsulta(event.target.value)
+    } else {
+      setConsultaCodeInputSearch('')
+    }
+  }
+
   function handleClickCard(consulta) {
     OpenCardModal(consulta)
     console.log(consulta)
   }
   return (
     <ContainerForCards>
+      <div>
+        <input
+          type="text"
+          id="search"
+          onChange={handleSearchConsultaForCode}
+          placeholder="Buscar por consultas"
+          value={consultaCodeInputSearch}
+        />
+      </div>
       {consultas.map((Consulta) => {
         return (
           <CardContainer
@@ -68,16 +74,16 @@ export function TabelaConsultas() {
             }}
           >
             <div>
+              <div>Data: {Consulta.data}</div>
+              <div>Código: {Consulta.codigo}</div>
+            </div>
+            <div>
               <p>Cliente: {Consulta.clienteCPF.nome}</p>
               <p>Cpf: {Consulta.clienteCPF.cpf}</p>
             </div>
             <div>
               <p>Animal: {Consulta.animalID.nome}</p>
               <p>ID: {Consulta.animalID.codigo}</p>
-            </div>
-            <div>
-              <div>Data: {Consulta.data}</div>
-              <div>Código: {Consulta.codigo}</div>
             </div>
           </CardContainer>
         )

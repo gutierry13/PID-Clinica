@@ -27,12 +27,7 @@ export function Consultas() {
         <CustomerContainer>
           <div className="text">
             <h1>Consultas</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-              autem nulla, fugiat odit earum, ipsa eaque obcaecati eligendi unde
-              distinctio quas, optio placeat! Aut quae temporibus perferendis
-              maiores sequi commodi!
-            </p>
+            <p>Tela de gerenciamento e cadastro de consultas!</p>
           </div>
           <AddButtonStyles onClick={handleOpenNewConsultaModal}>
             Cadastrar Consulta

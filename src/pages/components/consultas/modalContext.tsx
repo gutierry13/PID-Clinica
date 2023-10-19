@@ -57,25 +57,25 @@ type selectedClient = {
 interface ModalContextType {
   OpenModal: () => void
   CloseModal: () => void
-  OpenCardModal: (consulta: {}) => void
+  OpenCardModal: (consulta: selectedClient) => void
   CloseCardModal: () => void
   isCardOpen: boolean
   isModalOpen: boolean
   selectedClient: selectedClient
-  changeSelectedConsulta: (cliente: string) => void
+  changeSelectedConsulta: (cliente: selectedClient) => void
 }
 export const ModalContext = createContext({} as ModalContextType)
 export function ConsultaModalProvider({ children }: ModalProviderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCardOpen, setIsCardOpen] = useState(false)
   const [selectedClient, setClienteSelecionado] = useState({} as selectedClient)
-  function changeSelectedConsulta(consulta) {
+  function changeSelectedConsulta(consulta: selectedClient) {
     setClienteSelecionado(consulta)
   }
   function OpenModal() {
     setIsModalOpen(true)
   }
-  function OpenCardModal(consulta: {}) {
+  function OpenCardModal(consulta: selectedClient) {
     setIsCardOpen(true)
     setClienteSelecionado(consulta)
   }
